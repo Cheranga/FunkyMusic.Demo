@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FunkyMusic.Demo.Application.Constants;
 using FunkyMusic.Demo.Application.Dto;
 using FunkyMusic.Demo.Application.Requests;
 using FunkyMusic.Demo.Application.Responses;
 using FunkyMusic.Demo.Domain;
+using FunkyMusic.Demo.Domain.Constants;
 using MediatR;
 using Artist = FunkyMusic.Demo.Domain.Models.Artist;
 
@@ -43,7 +42,7 @@ namespace FunkyMusic.Demo.Application.Handlers
 
         private Result<GetArtistByNameResponse> GetArtistResponse(List<Artist> operationData)
         {
-            var artists = operationData?.ToList()?? new List<Artist>();
+            var artists = operationData?.ToList() ?? new List<Artist>();
 
             if (!artists.Any())
             {
@@ -60,7 +59,6 @@ namespace FunkyMusic.Demo.Application.Handlers
             {
                 Artists = artistModels
             });
-
         }
     }
 }

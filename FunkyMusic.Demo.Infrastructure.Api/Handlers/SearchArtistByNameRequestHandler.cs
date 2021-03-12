@@ -24,7 +24,9 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
                 Type = x % 2 == 0 ? ArtistType.Person : ArtistType.Group
             }).ToList();
 
-            return Task.FromResult(Result<List<Artist>>.Success(artists));
+            artists = new List<Artist>();
+
+            return Task.FromResult(Result<List<Artist>>.Failure(ErrorCodes.ArtistSearchInternalError, "some error!"));
         }
     }
 }
