@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using FunkyMusic.Demo.Domain.Constants;
 using FunkyMusic.Demo.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -39,7 +40,7 @@ namespace FunkyMusic.Demo.Domain.Behaviours
 
             var errorMessage = string.Join(", ", validationResult.ToErrorMessage());
             _logger.LogWarning("Validation error occured for {correlationId} in {dtoRequest} with message: {errorMessage}", request.CorrelationId,  requestType, errorMessage);
-            return Result<TResponse>.Failure(validationResult);
+            return Result<TResponse>.Failure(ErrorCodes.ValidationError, validationResult);
         }
     }
 }

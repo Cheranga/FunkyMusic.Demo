@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
 using FunkyMusic.Demo.Api.Dto.Requests;
+using FunkyMusic.Demo.Api.Dto.Responses;
 using FunkyMusic.Demo.Api.Extensions;
+using FunkyMusic.Demo.Api.ResponseFormatters;
+using FunkyMusic.Demo.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +20,12 @@ namespace FunkyMusic.Demo.Api.Functions
     {
         private readonly ILogger<GetArtistByNameFunction> _logger;
         private readonly IMediator _mediator;
+        private readonly IResponseFormatter<SearchArtistByNameResponseDto> _responseFormatter;
 
-        public GetArtistByNameFunction(IMediator mediator, ILogger<GetArtistByNameFunction> logger)
+        public GetArtistByNameFunction(IMediator mediator, IResponseFormatter<SearchArtistByNameResponseDto> responseFormatter, ILogger<GetArtistByNameFunction> logger)
         {
             _mediator = mediator;
+            _responseFormatter = responseFormatter;
             _logger = logger;
         }
 
@@ -40,12 +45,7 @@ namespace FunkyMusic.Demo.Api.Functions
 
             var operation = await _mediator.Send(searchArtistRequestDto);
 
-            if (operation.Status)
-            {
-                return new OkResult();
-            }
-
-            return new BadRequestObjectResult(operation);
+            return _responseFormatter.GetActionResult(operation);
         }
     }
 }

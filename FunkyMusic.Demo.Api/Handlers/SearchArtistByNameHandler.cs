@@ -1,8 +1,12 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using FunkyMusic.Demo.Api.Dto.Assets;
 using FunkyMusic.Demo.Api.Dto.Requests;
 using FunkyMusic.Demo.Api.Dto.Responses;
 using FunkyMusic.Demo.Application.Requests;
+using FunkyMusic.Demo.Application.Responses;
 using FunkyMusic.Demo.Domain;
 using MediatR;
 
@@ -28,11 +32,20 @@ namespace FunkyMusic.Demo.Api.Handlers
             var operation = await _mediator.Send(getArtistByNameRequest, cancellationToken);
             if (!operation.Status)
             {
-                return Result<SearchArtistByNameResponseDto>.Failure(operation.Validation);
+                return Result<SearchArtistByNameResponseDto>.Failure(operation.ErrorCode, operation.Validation);
             }
 
-            // TODO: Some elegant mapping.
-            var response = new SearchArtistByNameResponseDto();
+            var artistDtos = operation.Data.Artists.Select(x => new ArtistDto
+            {
+                ArtistId = x.ArtistId,
+                ArtistName = x.ArtistName
+            }).ToList();
+
+            var response = new SearchArtistByNameResponseDto
+            {
+                Artists = artistDtos
+            };
+
             return Result<SearchArtistByNameResponseDto>.Success(response);
         }
     }

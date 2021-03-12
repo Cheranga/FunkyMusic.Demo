@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 using FunkyMusic.Demo.Api;
+using FunkyMusic.Demo.Api.Dto.Responses;
+using FunkyMusic.Demo.Api.ResponseFormatters;
 using FunkyMusic.Demo.Application;
+using FunkyMusic.Demo.Application.Responses;
 using MediatR;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -19,10 +22,17 @@ namespace FunkyMusic.Demo.Api
 
             RegisterMediatr(services);
             RegisterValidators(services);
+            RegisterResponseFormatters(services);
 
             services.UseFunkyApplication();
             Domain.Bootstrapper.UseDomain(services);
             Infrastructure.Api.Bootstrapper.UseExternalMusicSearchApi(services);
+
+        }
+
+        private void RegisterResponseFormatters(IServiceCollection services)
+        {
+            services.AddScoped<IResponseFormatter<SearchArtistByNameResponseDto>, GetArtistByNameResponseFormatter>();
         }
 
         private void RegisterValidators(IServiceCollection services)
