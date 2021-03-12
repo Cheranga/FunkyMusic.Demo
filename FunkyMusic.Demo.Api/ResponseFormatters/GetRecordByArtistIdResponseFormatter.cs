@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FunkyMusic.Demo.Api.ResponseFormatters
 {
-    public class GetArtistByNameResponseFormatter : IResponseFormatter<SearchArtistByNameResponseDto>
+    public class GetRecordByArtistIdResponseFormatter: IResponseFormatter<SearchRecordsForArtistByIdResponseDto>
     {
-        public IActionResult GetActionResult(Result<SearchArtistByNameResponseDto> result)
+        public IActionResult GetActionResult(Result<SearchRecordsForArtistByIdResponseDto> result)
         {
             if (!result.Status)
             {
@@ -21,7 +21,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
             return new OkObjectResult(result.Data);
         }
 
-        private IActionResult GetErrorResponse(Result<SearchArtistByNameResponseDto> result)
+        private IActionResult GetErrorResponse(Result<SearchRecordsForArtistByIdResponseDto> result)
         {
             var errorCode = result.ErrorCode;
 
@@ -30,49 +30,49 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
 
             switch (errorCode)
             {
-                case ErrorCodes.ArtistSearchExternalError:
-                case ErrorCodes.ArtistSearchInternalError:
-                    errorResponse = GetArtistSearchErrorResponse(errorCode);
+                case ErrorCodes.ArtistRecordsSearchInternalError:
+                case ErrorCodes.ArtistRecordsSearchExternalError:
+                    errorResponse = GetArtistRecordSearchErrorResponse(errorCode);
                     statusCode = HttpStatusCode.InternalServerError;
                     break;
 
                 case ErrorCodes.ValidationError:
-                    errorResponse = GetArtistValidationErrorResponse(result);
+                    errorResponse = GetArtistRecordSearchValidationErrorResponse(result);
                     statusCode = HttpStatusCode.BadRequest;
                     break;
 
-                case ErrorCodes.ArtistNotFound:
-                    errorResponse = GetArtistNotFoundResponse();
+                case ErrorCodes.ArtistRecordsNotFound:
+                    errorResponse = GetArtistRecordsNotFoundResponse();
                     statusCode = HttpStatusCode.NotFound;
                     break;
 
                 default:
-                    errorResponse = GetArtistSearchErrorResponse(ErrorCodes.ArtistSearchInternalError);
+                    errorResponse = GetArtistRecordSearchErrorResponse(ErrorCodes.ArtistSearchInternalError);
                     statusCode = HttpStatusCode.InternalServerError;
                     break;
             }
 
             return new ObjectResult(errorResponse)
             {
-                StatusCode = (int) statusCode
+                StatusCode = (int)statusCode
             };
         }
 
-        private ErrorResponse GetArtistNotFoundResponse()
+        private ErrorResponse GetArtistRecordsNotFoundResponse()
         {
             var errorResponse = new ErrorResponse
             {
-                ErrorCode = ErrorCodes.ArtistNotFound,
+                ErrorCode = ErrorCodes.ArtistRecordsNotFound,
                 Errors = new List<ErrorMessage>
                 {
-                    new ErrorMessage {Field = "Artist", Message = "Artist not found."}
+                    new ErrorMessage {Field = "ArtistRecords", Message = "There are no records found for the artist."}
                 }
             };
 
             return errorResponse;
         }
 
-        private ErrorResponse GetArtistValidationErrorResponse(Result<SearchArtistByNameResponseDto> result)
+        private ErrorResponse GetArtistRecordSearchValidationErrorResponse(Result<SearchRecordsForArtistByIdResponseDto> result)
         {
             var errorResponse = new ErrorResponse
             {
@@ -87,7 +87,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
             return errorResponse;
         }
 
-        private ErrorResponse GetArtistSearchErrorResponse(string errorCode)
+        private ErrorResponse GetArtistRecordSearchErrorResponse(string errorCode)
         {
             var errorResponse = new ErrorResponse
             {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FunkyMusic.Demo.Application.Dto;
 using FunkyMusic.Demo.Domain;
-using FunkyMusic.Demo.Domain.Constants;
 using FunkyMusic.Demo.Domain.Models;
 using MediatR;
 
@@ -24,9 +22,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
                 Type = x % 2 == 0 ? ArtistType.Person : ArtistType.Group
             }).ToList();
 
-            artists = new List<Artist>();
-
-            return Task.FromResult(Result<List<Artist>>.Failure(ErrorCodes.ArtistSearchInternalError, "some error!"));
+            return Task.FromResult(Result<List<Artist>>.Success(artists));
         }
     }
 }
