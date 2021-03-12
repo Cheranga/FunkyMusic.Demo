@@ -33,6 +33,7 @@ namespace FunkyMusic.Demo.Api
         private void RegisterResponseFormatters(IServiceCollection services)
         {
             services.AddScoped<IResponseFormatter<SearchArtistByNameResponseDto>, GetArtistByNameResponseFormatter>();
+            services.AddScoped<IResponseFormatter<SearchRecordsForArtistByIdResponseDto>, GetRecordByArtistIdResponseFormatter>();
         }
 
         private void RegisterValidators(IServiceCollection services)

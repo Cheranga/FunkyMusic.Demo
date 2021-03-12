@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FunkyMusic.Demo.Application.Dto;
 using FunkyMusic.Demo.Domain;
+using FunkyMusic.Demo.Domain.Constants;
 using FunkyMusic.Demo.Domain.Models;
 using MediatR;
 

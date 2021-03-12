@@ -44,7 +44,8 @@ namespace FunkyMusic.Demo.Application.Handlers
             var recordModels = records.Select(x => new Responses.Record
             {
                 Id = x.Id,
-                Name = x.Title
+                Name = x.Title,
+                ReleaseDate = x.ReleaseDate
             }).ToList();
 
             return Result<GetRecordsForArtistByIdResponse>.Success(new GetRecordsForArtistByIdResponse

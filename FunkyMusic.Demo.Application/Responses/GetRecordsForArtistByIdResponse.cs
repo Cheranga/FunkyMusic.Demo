@@ -11,5 +11,6 @@ namespace FunkyMusic.Demo.Application.Responses
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string ReleaseDate { get; set; }
     }
 }
