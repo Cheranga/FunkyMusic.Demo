@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Api", "FunkyMusic.Demo.Api\FunkyMusic.Demo.Api.csproj", "{6237E976-C7FA-44E1-ADAF-0A14B3673632}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Application", "FunkyMusic.Demo.Application\FunkyMusic.Demo.Application.csproj", "{2ECD5A90-B072-493A-A5B8-67502D689B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Domain", "FunkyMusic.Demo.Domain\FunkyMusic.Demo.Domain.csproj", "{551635E7-01EC-49D3-8C07-03A345FF4F47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6237E976-C7FA-44E1-ADAF-0A14B3673632}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6237E976-C7FA-44E1-ADAF-0A14B3673632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6237E976-C7FA-44E1-ADAF-0A14B3673632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ECD5A90-B072-493A-A5B8-67502D689B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ECD5A90-B072-493A-A5B8-67502D689B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ECD5A90-B072-493A-A5B8-67502D689B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ECD5A90-B072-493A-A5B8-67502D689B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551635E7-01EC-49D3-8C07-03A345FF4F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551635E7-01EC-49D3-8C07-03A345FF4F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551635E7-01EC-49D3-8C07-03A345FF4F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551635E7-01EC-49D3-8C07-03A345FF4F47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
