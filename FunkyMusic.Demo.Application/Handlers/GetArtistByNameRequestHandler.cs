@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FunkyMusic.Demo.Application.Handlers
 {
-    public class GetArtistByNameRequestHandler : IRequestHandler<GetArtistByNameRequest, Result<GetArtistByNameResponse>>
+    internal class GetArtistByNameRequestHandler : IRequestHandler<GetArtistByNameRequest, Result<GetArtistByNameResponse>>
     {
         private readonly IMediator _mediator;
 

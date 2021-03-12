@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
 {
-    public class SearchArtistByNameRequestHandler : IRequestHandler<SearchArtistByNameRequest, Result<List<Artist>>>
+    internal class SearchArtistByNameRequestHandler : IRequestHandler<SearchArtistByNameRequest, Result<List<Artist>>>
     {
         public async Task<Result<List<Artist>>> Handle(SearchArtistByNameRequest request, CancellationToken cancellationToken)
         {
