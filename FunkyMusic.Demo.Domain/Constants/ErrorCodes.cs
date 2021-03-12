@@ -6,6 +6,6 @@
         public const string ArtistSearchExternalError = "ARTISTSEARCH_EXTERNAL_ERROR_500";
         public const string ArtistSearchInternalError = "ARTISTSEARCH_INTERNAL_ERROR_500";
         public const string ArtistNotFound = "ARTIST_404";
-
+        public const string ArtistRecordsNotFound = "ARTIST_RECORDS_404";
     }
 }

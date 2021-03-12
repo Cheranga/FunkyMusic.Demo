@@ -1,0 +1,13 @@
+﻿using System.Collections.Generic;
+using FunkyMusic.Demo.Domain;
+using FunkyMusic.Demo.Domain.Models;
+using MediatR;
+
+namespace FunkyMusic.Demo.Application.Dto
+{
+    public class SearchRecordsForArtistByIdRequest : IRequest<Result<List<Record>>>, IValidatable
+    {
+        public string ArtistId { get; set; }
+        public string CorrelationId { get; set; }
+    }
+}
