@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FunkyMusic.Demo.Application\FunkyMusic.Demo.Application.csproj" />
     <ProjectReference Include="..\FunkyMusic.Demo.Domain\FunkyMusic.Demo.Domain.csproj" />
+    <ProjectReference Include="..\FunkyMusic.Demo.Infrastructure.Api\FunkyMusic.Demo.Infrastructure.Api.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
