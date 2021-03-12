@@ -11,6 +11,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Domain", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Infrastructure.Api", "FunkyMusic.Demo.Infrastructure.Api\FunkyMusic.Demo.Infrastructure.Api.csproj", "{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{57BC6F22-1791-470B-9E3A-20EF3328EB3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{29D98B98-7E76-4515-9FE8-04FD9FB45FCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DB4B06B4-458F-4AE1-9CC1-86091315964D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2C87E7C1-8596-41D0-B22F-A543483F6487}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +47,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6237E976-C7FA-44E1-ADAF-0A14B3673632} = {57BC6F22-1791-470B-9E3A-20EF3328EB3C}
+		{2ECD5A90-B072-493A-A5B8-67502D689B48} = {29D98B98-7E76-4515-9FE8-04FD9FB45FCB}
+		{551635E7-01EC-49D3-8C07-03A345FF4F47} = {29D98B98-7E76-4515-9FE8-04FD9FB45FCB}
+		{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6} = {DB4B06B4-458F-4AE1-9CC1-86091315964D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80FB49E0-9876-4740-B28F-2D5A67AE1A2D}
