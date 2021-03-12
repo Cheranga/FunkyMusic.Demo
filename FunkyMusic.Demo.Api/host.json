@@ -1,0 +1,29 @@
+{
+  "version": "2.0",
+  "logging": {
+    "fileLoggingMode": "always",
+    "logLevel": {
+      "default": "Debug",
+      "Host.Results": "Debug",
+      "Function": "Debug",
+      "Host.Aggregator": "Debug"
+    }
+  },
+  "openApi": {
+    "info": {
+      "version": "1.0.0",
+      "title": "FunkyMusic Search API",
+      "description": "API to search for music artists and their records.",
+      "termsOfService": "https://cchatangala.com/",
+      "contact": {
+        "name": "Cheranga",
+        "email": "cheranga@gmail.com",
+        "url": "https://cchatangala.com/"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://cheranga.mit-license.org/"
+      }
+    }
+  }
+}
