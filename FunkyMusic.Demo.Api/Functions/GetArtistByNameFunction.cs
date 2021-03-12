@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using FunkyMusic.Demo.Api.Dto.Requests;
 using FunkyMusic.Demo.Api.Dto.Responses;
 using FunkyMusic.Demo.Api.Extensions;
@@ -33,6 +34,9 @@ namespace FunkyMusic.Demo.Api.Functions
         [OpenApiOperation("GetArtistByName", "FunkyMusic", Summary = "Get artist by name.", Description = "This will get the artist by connecting to the third party API.", Visibility = OpenApiVisibilityType.Important)]
         [OpenApiParameter("correlationId", In = ParameterLocation.Header, Required = true, Description = "The correlaion id of the operation.")]
         [OpenApiParameter("artistName", In = ParameterLocation.Path, Required = true, Description = "The name of the artist.")]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(SearchArtistByNameResponseDto), Summary = "The artist/s which matches the search.", Description = "The artist/s which matches the search.")]
+        [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(ErrorResponse), Summary = "The artist search request is invalid.", Description = "The artist search request is invalid.")]
+        [OpenApiResponseWithBody(HttpStatusCode.InternalServerError, "application/json", typeof(ErrorResponse), Summary = "The artist search encountered an error.", Description = "The artist search encounted an error.")]
         public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "music/artist/{artistName}")]
             HttpRequest request, string artistName)
         {
