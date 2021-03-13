@@ -55,9 +55,9 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
             return Task.CompletedTask;
         }
 
-        private Task ThenMustReturnErrorCodeArtistNotFound()
+        private Task ThenMustReturnErrorCode(string expectedErrorCode)
         {
-            _result.ErrorCode.Should().BeEquivalentTo(ErrorCodes.ArtistNotFound);
+            _result.ErrorCode.Should().BeEquivalentTo(expectedErrorCode);
 
             return Task.CompletedTask;
         }
@@ -99,7 +99,7 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
             this.Given(x => GivenNoArtistsCanBeFoundForSearch(artists))
                 .When(x => WhenApplicationRequestHandlerExcutes())
                 .Then(x => ThenMustReturnFailure())
-                .And(x => ThenMustReturnErrorCodeArtistNotFound())
+                .And(x => ThenMustReturnErrorCode(ErrorCodes.ArtistNotFound))
                 .BDDfy();
 
             return Task.CompletedTask;

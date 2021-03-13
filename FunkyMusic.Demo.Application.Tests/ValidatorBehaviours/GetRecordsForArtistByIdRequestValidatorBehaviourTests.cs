@@ -19,7 +19,7 @@ namespace FunkyMusic.Demo.Application.Tests.ValidatorBehaviours
     [Collection(MusicDemoApplicationTestsCollection.Name)]
     public class GetRecordsForArtistByIdRequestValidatorBehaviourTests
     {
-        private readonly GetRecordsForArtistByIdRequest _request;
+        private GetRecordsForArtistByIdRequest _request;
         private readonly ValidationBehaviour<GetRecordsForArtistByIdRequest, Result<GetRecordsForArtistByIdResponse>> _validationBehaviour;
         private readonly GetRecordsForArtistByIdRequestValidator _validator;
         private Result<Result<GetRecordsForArtistByIdResponse>> _result;
@@ -60,6 +60,30 @@ namespace FunkyMusic.Demo.Application.Tests.ValidatorBehaviours
                 .And(x => ThenValidationErrorForArtistIdMustBePresent())
                 .BDDfy();
 
+            return Task.CompletedTask;
+        }
+
+        [Fact]
+        public Task GetRecordsForArtistByIdRequestItselfIsNull()
+        {
+            this.Given(x => GivenRequestIsNull())
+                .When(x => WhenValidationIsPerformedThroughPipeline())
+                .Then(x => ThenValidationPipelineMustFail())
+                .And(x => ThenThereMustBeValidationErrors())
+                .BDDfy();
+
+            return Task.CompletedTask;
+        }
+
+        private Task ThenThereMustBeValidationErrors()
+        {
+            _result.Validation.Errors.Should().NotBeNullOrEmpty();
+            return Task.CompletedTask;
+        }
+
+        private Task GivenRequestIsNull()
+        {
+            _request = null;
             return Task.CompletedTask;
         }
 
