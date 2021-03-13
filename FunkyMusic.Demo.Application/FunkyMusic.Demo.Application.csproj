@@ -8,4 +8,10 @@
     <ProjectReference Include="..\FunkyMusic.Demo.Domain\FunkyMusic.Demo.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>FunkyMusic.Demo.Application.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

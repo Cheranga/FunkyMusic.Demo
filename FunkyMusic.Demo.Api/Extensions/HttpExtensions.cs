@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -15,7 +13,8 @@ namespace FunkyMusic.Demo.Api.Extensions
         {
             if (request.Headers.TryGetValue(headerName, out var headerValueData))
             {
-                return headerValueData.FirstOrDefault();
+                var headerValue = headerValueData.FirstOrDefault()?.Trim();
+                return headerValue;
             }
 
             return string.Empty;
