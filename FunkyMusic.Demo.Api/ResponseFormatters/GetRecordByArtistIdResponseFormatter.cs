@@ -30,12 +30,6 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
 
             switch (errorCode)
             {
-                case ErrorCodes.ArtistRecordsSearchInternalError:
-                case ErrorCodes.ArtistRecordsSearchExternalError:
-                    errorResponse = GetArtistRecordSearchErrorResponse(errorCode);
-                    statusCode = HttpStatusCode.InternalServerError;
-                    break;
-
                 case ErrorCodes.ValidationError:
                     errorResponse = GetArtistRecordSearchValidationErrorResponse(result);
                     statusCode = HttpStatusCode.BadRequest;
@@ -47,7 +41,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
                     break;
 
                 default:
-                    errorResponse = GetArtistRecordSearchErrorResponse(ErrorCodes.ArtistSearchInternalError);
+                    errorResponse = GetArtistRecordSearchErrorResponse(ErrorCodes.ArtistRecordsSearchError);
                     statusCode = HttpStatusCode.InternalServerError;
                     break;
             }

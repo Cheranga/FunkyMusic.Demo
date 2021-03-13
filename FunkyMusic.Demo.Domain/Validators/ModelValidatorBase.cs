@@ -5,7 +5,7 @@ namespace FunkyMusic.Demo.Domain.Validators
 {
     public abstract class ModelValidatorBase<T> : AbstractValidator<T>
     {
-        public ModelValidatorBase()
+        protected ModelValidatorBase()
         {
             CascadeMode = CascadeMode.Stop;
         }

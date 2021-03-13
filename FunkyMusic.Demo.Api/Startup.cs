@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using FunkyMusic.Demo.Api;
 using FunkyMusic.Demo.Api.Dto.Responses;
 using FunkyMusic.Demo.Api.ResponseFormatters;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Options;
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace FunkyMusic.Demo.Api
 {
+    [ExcludeFromCodeCoverage]
     public class Startup : FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
