@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
@@ -22,12 +20,6 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
     [Collection(MusicDemoApiTestsCollection.Name)]
     public class SearchArtistByNameHandlerTests
     {
-        private static TestsInitializer _testsInitializer;
-        private Mock<IMediator> _mediator;
-        private SearchArtistByNameHandler _handler;
-        private SearchArtistByNameRequestDto _request;
-        private Result<SearchArtistByNameResponseDto> _result;
-
         public SearchArtistByNameHandlerTests(TestsInitializer testsInitializer)
         {
             _testsInitializer = testsInitializer;
@@ -37,16 +29,11 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
             _handler = new SearchArtistByNameHandler(_mediator.Object);
         }
 
-        [Fact]
-        public Task ErrorOccursInWhenSearchingForArtistByName()
-        {
-            this.Given(x => GivenMusicSearchReturnsAnError())
-                .When(x => WhenTheHandlerExecutes())
-                .Then(x => ThenMustReturnFailure())
-                .BDDfy();
-
-            return Task.CompletedTask;
-        }
+        private static TestsInitializer _testsInitializer;
+        private readonly Mock<IMediator> _mediator;
+        private readonly SearchArtistByNameHandler _handler;
+        private readonly SearchArtistByNameRequestDto _request;
+        private Result<SearchArtistByNameResponseDto> _result;
 
         [Theory]
         [MemberData(nameof(GetNotFoundArtists))]
@@ -55,7 +42,7 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
             this.Given(x => GivenMusicSearchReturnsArtists(artists))
                 .When(x => WhenTheHandlerExecutes())
                 .Then(x => ThenMustReturnFailure())
-                .And(x=> ThenMustHaveErrorCode(ErrorCodes.ArtistNotFound))
+                .And(x => ThenMustHaveErrorCode(ErrorCodes.ArtistNotFound))
                 .BDDfy();
 
             return Task.CompletedTask;
@@ -100,8 +87,8 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
         {
             var artists = new List<object[]>
             {
-                new object[]{null},
-                new object[]{new List<Artist>() }
+                new object[] {null},
+                new object[] {new List<Artist>()}
             };
 
             return artists;
@@ -111,8 +98,8 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
         {
             var artists = new List<object[]>
             {
-                new object[]{new List<Artist>(new []{ _testsInitializer.Fixture.Create<Artist>() }), },
-                new object[]{new List<Artist>(_testsInitializer.Fixture.CreateMany<Artist>()) }
+                new object[] {new List<Artist>(new[] {_testsInitializer.Fixture.Create<Artist>()})},
+                new object[] {new List<Artist>(_testsInitializer.Fixture.CreateMany<Artist>())}
             };
 
             return artists;
@@ -135,6 +122,17 @@ namespace FunkyMusic.Demo.Api.Tests.Handlers
         {
             _mediator.Setup(x => x.Send(It.IsAny<GetArtistByNameRequest>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<GetArtistByNameResponse>.Failure("errorcode", "errormessage"));
+
+            return Task.CompletedTask;
+        }
+
+        [Fact]
+        public Task ErrorOccursInWhenSearchingForArtistByName()
+        {
+            this.Given(x => GivenMusicSearchReturnsAnError())
+                .When(x => WhenTheHandlerExecutes())
+                .Then(x => ThenMustReturnFailure())
+                .BDDfy();
 
             return Task.CompletedTask;
         }
