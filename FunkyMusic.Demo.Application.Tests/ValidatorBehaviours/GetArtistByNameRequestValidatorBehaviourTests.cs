@@ -14,19 +14,21 @@ using Moq;
 using TestStack.BDDfy;
 using Xunit;
 
-namespace FunkyMusic.Demo.Application.Tests
+namespace FunkyMusic.Demo.Application.Tests.ValidatorBehaviours
 {
+    [Collection(MusicDemoApplicationTestsCollection.Name)]
     public class GetArtistByNameRequestValidatorBehaviourTests
     {
-        private readonly GetArtistByNameRequest _request;
+        private GetArtistByNameRequest _request;
         private readonly ValidationBehaviour<GetArtistByNameRequest, Result<GetArtistByNameResponse>> _validationBehaviour;
         private readonly GetArtistByNameRequestValidator _validator;
         private Result<Result<GetArtistByNameResponse>> _result;
 
-        public GetArtistByNameRequestValidatorBehaviourTests()
+        public GetArtistByNameRequestValidatorBehaviourTests(TestsInitializer testsInitializer)
         {
             var logger = Mock.Of<ILogger<ValidationBehaviour<GetArtistByNameRequest, Result<GetArtistByNameResponse>>>>();
-            _request = new Fixture().Create<GetArtistByNameRequest>();
+            
+            _request = testsInitializer.Fixture.Create<GetArtistByNameRequest>();
             _validator = new GetArtistByNameRequestValidator();
             _validationBehaviour = new ValidationBehaviour<GetArtistByNameRequest, Result<GetArtistByNameResponse>>(_validator, logger);
         }
@@ -58,6 +60,30 @@ namespace FunkyMusic.Demo.Application.Tests
                 .And(x => ThenValidationErrorForNameMustBePresent())
                 .BDDfy();
 
+            return Task.CompletedTask;
+        }
+
+        [Fact]
+        public Task GetArtistByNameRequestItselfIsNull()
+        {
+            this.Given(x => GivenRequestIsNull())
+                .When(x => WhenValidationIsPerformedThroughPipeline())
+                .Then(x => ThenValidationPipelineMustFail())
+                .And(x=> ThenThereMustBeValidationErrors())
+                .BDDfy();
+
+            return Task.CompletedTask;
+        }
+
+        private Task ThenThereMustBeValidationErrors()
+        {
+            _result.Validation.Errors.Should().NotBeNullOrEmpty();
+            return Task.CompletedTask;
+        }
+
+        private Task GivenRequestIsNull()
+        {
+            _request = null;
             return Task.CompletedTask;
         }
 

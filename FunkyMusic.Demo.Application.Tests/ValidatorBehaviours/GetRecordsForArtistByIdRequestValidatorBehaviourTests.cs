@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
@@ -17,8 +14,9 @@ using Moq;
 using TestStack.BDDfy;
 using Xunit;
 
-namespace FunkyMusic.Demo.Application.Tests
+namespace FunkyMusic.Demo.Application.Tests.ValidatorBehaviours
 {
+    [Collection(MusicDemoApplicationTestsCollection.Name)]
     public class GetRecordsForArtistByIdRequestValidatorBehaviourTests
     {
         private readonly GetRecordsForArtistByIdRequest _request;
@@ -26,10 +24,11 @@ namespace FunkyMusic.Demo.Application.Tests
         private readonly GetRecordsForArtistByIdRequestValidator _validator;
         private Result<Result<GetRecordsForArtistByIdResponse>> _result;
 
-        public GetRecordsForArtistByIdRequestValidatorBehaviourTests()
+        public GetRecordsForArtistByIdRequestValidatorBehaviourTests(TestsInitializer testsInitializer)
         {
             var logger = Mock.Of<ILogger<ValidationBehaviour<GetRecordsForArtistByIdRequest, Result<GetRecordsForArtistByIdResponse>>>>();
-            _request = new Fixture().Create<GetRecordsForArtistByIdRequest>();
+            
+            _request = testsInitializer.Fixture.Create<GetRecordsForArtistByIdRequest>();
             _validator = new GetRecordsForArtistByIdRequestValidator();
             _validationBehaviour = new ValidationBehaviour<GetRecordsForArtistByIdRequest, Result<GetRecordsForArtistByIdResponse>>(_validator, logger);
         }

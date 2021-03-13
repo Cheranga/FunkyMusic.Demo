@@ -24,7 +24,7 @@ namespace FunkyMusic.Demo.Domain.Behaviours
 
             stopWatch.Stop();
 
-            _logger.LogInformation("{request} with {correlationId} ended, time taken {timeTaken} ms.", typeof(TRequest).Name, request.CorrelationId, stopWatch.ElapsedMilliseconds);
+            _logger.LogInformation("{request} with {correlationId} ended, time taken {timeTaken} ms.", typeof(TRequest).Name, request?.CorrelationId, stopWatch.ElapsedMilliseconds);
 
             return response;
         }
