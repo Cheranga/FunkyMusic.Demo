@@ -1,7 +1,9 @@
-﻿using FluentValidation.Results;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation.Results;
 
 namespace FunkyMusic.Demo.Domain
 {
+    [ExcludeFromCodeCoverage]
     public class Result<T>
     {
         public T Data { get; set; }

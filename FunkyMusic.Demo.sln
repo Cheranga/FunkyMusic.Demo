@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Application.Tests", "FunkyMusic.Demo.Application.Tests\FunkyMusic.Demo.Application.Tests.csproj", "{7CFEF90F-0B94-426F-89E9-93A58FF3624A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,10 @@ Global
 		{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFEF90F-0B94-426F-89E9-93A58FF3624A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFEF90F-0B94-426F-89E9-93A58FF3624A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFEF90F-0B94-426F-89E9-93A58FF3624A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFEF90F-0B94-426F-89E9-93A58FF3624A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{2ECD5A90-B072-493A-A5B8-67502D689B48} = {29D98B98-7E76-4515-9FE8-04FD9FB45FCB}
 		{551635E7-01EC-49D3-8C07-03A345FF4F47} = {29D98B98-7E76-4515-9FE8-04FD9FB45FCB}
 		{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6} = {DB4B06B4-458F-4AE1-9CC1-86091315964D}
+		{7CFEF90F-0B94-426F-89E9-93A58FF3624A} = {85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80FB49E0-9876-4740-B28F-2D5A67AE1A2D}
