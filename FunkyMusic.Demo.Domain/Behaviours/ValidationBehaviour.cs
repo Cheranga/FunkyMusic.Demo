@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using FluentValidation;
 using FunkyMusic.Demo.Domain.Constants;
-using FunkyMusic.Demo.Domain.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -38,8 +37,7 @@ namespace FunkyMusic.Demo.Domain.Behaviours
                 return operation;
             }
 
-            var errorMessage = string.Join(", ", validationResult.ToErrorMessage());
-            _logger.LogWarning("Validation error occured for {correlationId} in {dtoRequest} with message: {errorMessage}", request?.CorrelationId,  requestType, errorMessage);
+            _logger.LogWarning("Validation error occured for {correlationId} in {dtoRequest} with errors: {@errors}", request?.CorrelationId,  requestType, validationResult?.Errors);
             return Result<TResponse>.Failure(ErrorCodes.ValidationError, validationResult);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunkyMusic.Demo.Domain.Behaviours
 {
+    [ExcludeFromCodeCoverage]
     public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatable
     {
         private readonly ILogger<PerformanceBehaviour<TRequest, TResponse>> _logger;
