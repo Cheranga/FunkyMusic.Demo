@@ -1,5 +1,8 @@
-﻿namespace FunkyMusic.Demo.Domain.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace FunkyMusic.Demo.Domain.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Artist
     {
         public string Id { get; set; }

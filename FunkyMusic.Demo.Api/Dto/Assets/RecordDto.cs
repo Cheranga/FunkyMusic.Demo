@@ -1,5 +1,8 @@
-﻿namespace FunkyMusic.Demo.Api.Dto.Assets
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace FunkyMusic.Demo.Api.Dto.Assets
 {
+    [ExcludeFromCodeCoverage]
     public class RecordDto
     {
         public string Title { get; set; }
