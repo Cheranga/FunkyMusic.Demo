@@ -22,7 +22,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
                 Type = x % 2 == 0 ? ArtistType.Person : ArtistType.Group
             }).ToList();
 
-            return Task.FromResult(Result<List<Artist>>.Success(artists));
+            return Task.FromResult(Result<List<Artist>>.Success(new List<Artist>{artists.First()}));
         }
     }
 }
