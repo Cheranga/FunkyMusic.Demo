@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Api", "FunkyMusic.Demo.Api\FunkyMusic.Demo.Api.csproj", "{6237E976-C7FA-44E1-ADAF-0A14B3673632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Api", "FunkyMusic.Demo.Api\FunkyMusic.Demo.Api.csproj", "{6237E976-C7FA-44E1-ADAF-0A14B3673632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Application", "FunkyMusic.Demo.Application\FunkyMusic.Demo.Application.csproj", "{2ECD5A90-B072-493A-A5B8-67502D689B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Application", "FunkyMusic.Demo.Application\FunkyMusic.Demo.Application.csproj", "{2ECD5A90-B072-493A-A5B8-67502D689B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Domain", "FunkyMusic.Demo.Domain\FunkyMusic.Demo.Domain.csproj", "{551635E7-01EC-49D3-8C07-03A345FF4F47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Domain", "FunkyMusic.Demo.Domain\FunkyMusic.Demo.Domain.csproj", "{551635E7-01EC-49D3-8C07-03A345FF4F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Infrastructure.Api", "FunkyMusic.Demo.Infrastructure.Api\FunkyMusic.Demo.Infrastructure.Api.csproj", "{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Infrastructure.Api", "FunkyMusic.Demo.Infrastructure.Api\FunkyMusic.Demo.Infrastructure.Api.csproj", "{81DB1C09-34AC-4DA2-9F13-F9CA03B4C0F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{57BC6F22-1791-470B-9E3A-20EF3328EB3C}"
 EndProject
@@ -24,11 +24,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Application.Tests", "FunkyMusic.Demo.Application.Tests\FunkyMusic.Demo.Application.Tests.csproj", "{7CFEF90F-0B94-426F-89E9-93A58FF3624A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Application.Tests", "FunkyMusic.Demo.Application.Tests\FunkyMusic.Demo.Application.Tests.csproj", "{7CFEF90F-0B94-426F-89E9-93A58FF3624A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Domain.Tests", "FunkyMusic.Demo.Domain.Tests\FunkyMusic.Demo.Domain.Tests.csproj", "{50978028-E64D-4908-905D-F76D445344EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Domain.Tests", "FunkyMusic.Demo.Domain.Tests\FunkyMusic.Demo.Domain.Tests.csproj", "{50978028-E64D-4908-905D-F76D445344EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Api.Tests", "FunkyMusic.Demo.Api.Tests\FunkyMusic.Demo.Api.Tests.csproj", "{CC537136-8688-4517-A202-E061182D4BE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyMusic.Demo.Api.Tests", "FunkyMusic.Demo.Api.Tests\FunkyMusic.Demo.Api.Tests.csproj", "{CC537136-8688-4517-A202-E061182D4BE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyMusic.Demo.Infrastructure.Api.Tests", "FunkyMusic.Demo.Infrastructure.Api.Tests\FunkyMusic.Demo.Infrastructure.Api.Tests.csproj", "{625A1F19-7C69-497B-AC47-6B00E1EACE3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{CC537136-8688-4517-A202-E061182D4BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC537136-8688-4517-A202-E061182D4BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC537136-8688-4517-A202-E061182D4BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{625A1F19-7C69-497B-AC47-6B00E1EACE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{625A1F19-7C69-497B-AC47-6B00E1EACE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{625A1F19-7C69-497B-AC47-6B00E1EACE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{625A1F19-7C69-497B-AC47-6B00E1EACE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{7CFEF90F-0B94-426F-89E9-93A58FF3624A} = {85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}
 		{50978028-E64D-4908-905D-F76D445344EC} = {85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}
 		{CC537136-8688-4517-A202-E061182D4BE5} = {85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}
+		{625A1F19-7C69-497B-AC47-6B00E1EACE3A} = {85E57AF5-ECE1-4174-A4E2-A1E0F4965E8B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80FB49E0-9876-4740-B28F-2D5A67AE1A2D}

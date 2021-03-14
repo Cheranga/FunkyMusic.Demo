@@ -13,7 +13,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Services
 
         public MusicArtistFilterService(MusicSearchConfig musicSearchConfig)
         {
-            _minScore = (musicSearchConfig == null || musicSearchConfig.MinScoreForArtistFilter <= 0) ? 100 : musicSearchConfig.MinScoreForArtistFilter;
+            _minScore = (musicSearchConfig == null || musicSearchConfig.MinConfidenceForArtistFilter <= 0) ? 100 : musicSearchConfig.MinConfidenceForArtistFilter;
         }
 
         public Result<MusicArtistSearchResponseDto> FilterByScore(Result<MusicArtistSearchResponseDto> result)
