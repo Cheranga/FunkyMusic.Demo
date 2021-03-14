@@ -3,7 +3,7 @@ using FunkyMusic.Demo.Infrastructure.Api.Dto.Responses;
 
 namespace FunkyMusic.Demo.Infrastructure.Api.Services
 {
-    internal interface IMusicArtistFilterService
+    public interface IMusicArtistFilterService
     {
         Result<MusicArtistSearchResponseDto> FilterByScore(Result<MusicArtistSearchResponseDto> result);
     }

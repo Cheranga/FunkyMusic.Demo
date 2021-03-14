@@ -39,7 +39,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
             var records = recordDtos.Select(x => new Record
             {
                 Id = x.Id,
-                Length = x.Length.HasValue? x.Length.Value : 0,
+                Length = x.Length ?? 0,
                 Title = x.Title
             }).ToList();
 
