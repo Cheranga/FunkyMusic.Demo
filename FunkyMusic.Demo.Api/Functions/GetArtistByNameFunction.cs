@@ -33,14 +33,15 @@ namespace FunkyMusic.Demo.Api.Functions
         [FunctionName(nameof(GetArtistByNameFunction))]
         [OpenApiOperation("GetArtistByName", "FunkyMusic", Summary = "Search artist by name.", Description = "This will get the artist by connecting to the third party API.", Visibility = OpenApiVisibilityType.Important)]
         [OpenApiParameter("correlationId", In = ParameterLocation.Header, Required = true, Description = "The correlaion id of the operation.")]
-        [OpenApiParameter("artistName", In = ParameterLocation.Path, Required = true, Description = "The name of the artist.")]
+        [OpenApiParameter("name", In = ParameterLocation.Query, Required = true, Description = "The name of the artist.")]
         [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(SearchArtistByNameResponseDto), Summary = "The artist/s which matches the search.", Description = "The artist/s which matches the search.")]
         [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(ErrorResponse), Summary = "The artist search request is invalid.", Description = "The artist search request is invalid.")]
         [OpenApiResponseWithBody(HttpStatusCode.InternalServerError, "application/json", typeof(ErrorResponse), Summary = "The artist search encountered an error.", Description = "The artist search encountered an error.")]
-        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "music/search/artist/{artistName}")]
-            HttpRequest request, string artistName)
+        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "music/search/artist")]
+            HttpRequest request)
         {
             var correlationId = request.GetHeaderValue("correlationId");
+            var artistName = request.GetQueryStringValue("name");
             var searchArtistRequestDto = new SearchArtistByNameRequestDto
             {
                 CorrelationId = correlationId,

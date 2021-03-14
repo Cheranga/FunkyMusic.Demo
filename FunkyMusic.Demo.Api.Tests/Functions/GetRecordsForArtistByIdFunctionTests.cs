@@ -38,7 +38,7 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
             _mediator = new Mock<IMediator>();
             _logger = Mock.Of<ILogger<GetRecordsForArtistByIdFunction>>();
 
-            _function = new GetRecordsForArtistByIdFunction(_mediator.Object, new GetRecordByArtistIdResponseFormatter());
+            _function = new GetRecordsForArtistByIdFunction(_mediator.Object, new SearchRecordsForArtistByIdResponseDtoFormatter());
         }
 
         [Theory]
@@ -72,15 +72,17 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
             _response = await _function.SearchAsync(_httpRequest, "someartistid");
         }
 
-        private async Task GivenInvalidCorrelationIdIsProvidedInRequest(string correlationId)
+        private Task GivenInvalidCorrelationIdIsProvidedInRequest(string correlationId)
         {
-            _httpRequest = await _testsInitializer.GetMockedRequest(new Dictionary<string, StringValues>
+            _httpRequest = _testsInitializer.GetMockedRequest(new Dictionary<string, StringValues>
             {
                 {"correlationId", correlationId}
             });
 
             _mediator.Setup(x => x.Send(It.IsAny<SearchRecordsForArtistByIdRequestDto>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<SearchRecordsForArtistByIdResponseDto>.Failure(ErrorCodes.ValidationError, "errormessage"));
+
+            return Task.CompletedTask;
         }
 
         private Task ThenMustReturnErrorResponse(HttpStatusCode expectedHttpStatusCode)

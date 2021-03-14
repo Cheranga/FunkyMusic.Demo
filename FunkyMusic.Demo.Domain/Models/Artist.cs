@@ -7,20 +7,6 @@ namespace FunkyMusic.Demo.Domain.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public ArtistType Type { get; set; }
-        public string Country { get; set; }
-        public Gender Gender { get; set; }
-    }
-
-    public enum ArtistType
-    {
-        Person = 1,
-        Group = 2
-    }
-
-    public enum Gender
-    {
-        Male = 1,
-        Female = 2
+        public string Description { get; set; }
     }
 }

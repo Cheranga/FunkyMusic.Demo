@@ -9,10 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FunkyMusic.Demo.Api.ResponseFormatters
 {
-    public class GetArtistByNameResponseFormatter : IResponseFormatter<SearchArtistByNameResponseDto>
+    public class SearchArtistByNameResponseDtoFormatter : IResponseFormatter<SearchArtistByNameResponseDto>
     {
+        private const string ErrorOccuredWhenSearchingForArtist = "Error occured when searching for artist.";
+        private const string ArtistNotFound = "Artist not found.";
+
         public IActionResult GetActionResult(Result<SearchArtistByNameResponseDto> result)
         {
+            if (result == null)
+            {
+                return GetErrorResponse(Result<SearchArtistByNameResponseDto>.Failure(ErrorCodes.ArtistSearchError, ErrorOccuredWhenSearchingForArtist));
+            }
+
             if (!result.Status)
             {
                 return GetErrorResponse(result);
@@ -48,7 +56,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
 
             return new ObjectResult(errorResponse)
             {
-                StatusCode = (int) statusCode
+                StatusCode = (int)statusCode
             };
         }
 
@@ -59,7 +67,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
                 ErrorCode = ErrorCodes.ArtistNotFound,
                 Errors = new List<ErrorMessage>
                 {
-                    new ErrorMessage {Field = "Artist", Message = "Artist not found."}
+                    new ErrorMessage {Field = "Artist", Message = ArtistNotFound}
                 }
             };
 
@@ -88,7 +96,7 @@ namespace FunkyMusic.Demo.Api.ResponseFormatters
                 ErrorCode = errorCode,
                 Errors = new List<ErrorMessage>
                 {
-                    new ErrorMessage {Field = "", Message = "Error occured when searching for artist."}
+                    new ErrorMessage {Field = "", Message = ErrorOccuredWhenSearchingForArtist}
                 }
             };
 

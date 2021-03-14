@@ -42,8 +42,8 @@ namespace FunkyMusic.Demo.Api.Handlers
 
             var recordDtos = records.Select(x => new RecordDto
             {
+                Id = x.Id,
                 Title = x.Name,
-                ReleaseDate = x.ReleaseDate
             }).ToList();
 
             var response = new SearchRecordsForArtistByIdResponseDto

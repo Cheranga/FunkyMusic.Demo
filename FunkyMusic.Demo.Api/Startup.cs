@@ -28,14 +28,14 @@ namespace FunkyMusic.Demo.Api
 
             services.UseFunkyApplication();
             Domain.Bootstrapper.UseDomain(services);
-            Infrastructure.Api.Bootstrapper.UseExternalMusicSearchApi(services);
+            Infrastructure.Api.Bootstrapper.UseExternalMusicSearchApi(services, GetConfigurationRoot(builder));
 
         }
 
         private void RegisterResponseFormatters(IServiceCollection services)
         {
-            services.AddScoped<IResponseFormatter<SearchArtistByNameResponseDto>, GetArtistByNameResponseFormatter>();
-            services.AddScoped<IResponseFormatter<SearchRecordsForArtistByIdResponseDto>, GetRecordByArtistIdResponseFormatter>();
+            services.AddScoped<IResponseFormatter<SearchArtistByNameResponseDto>, SearchArtistByNameResponseDtoFormatter>();
+            services.AddScoped<IResponseFormatter<SearchRecordsForArtistByIdResponseDto>, SearchRecordsForArtistByIdResponseDtoFormatter>();
         }
 
         private void RegisterValidators(IServiceCollection services)
