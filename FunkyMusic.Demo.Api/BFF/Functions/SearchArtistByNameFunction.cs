@@ -33,15 +33,16 @@ namespace FunkyMusic.Demo.Api.BFF.Functions
         [FunctionName(nameof(SearchArtistByNameFunction))]
         [OpenApiOperation("SearchArtistByName", "FunkyMusic", Summary = "Bff related artist search by name.", Description = "This is a BFF function where it will return multiple artists if matching, else it will return all the recordings associated with the artist.", Visibility = OpenApiVisibilityType.Important)]
         [OpenApiParameter("correlationId", In = ParameterLocation.Header, Required = true, Description = "The correlaion id of the operation.")]
-        [OpenApiParameter("artistName", In = ParameterLocation.Path, Required = true, Description = "The name of the artist.")]
+        [OpenApiParameter("name", In = ParameterLocation.Query, Required = true, Description = "The name of the artist.")]
         [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(SearchArtistByNameResponse), Summary = "The artist and the records associated.", Description = "The artist and the records associated.")]
         //[OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(SearchArtistByNameResponseDto), Summary = "All the artists which matches the search.", Description = "All the artists which matches the search.")]
         [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(ErrorResponse), Summary = "The artist search request is invalid.", Description = "The artist search request is invalid.")]
         [OpenApiResponseWithBody(HttpStatusCode.InternalServerError, "application/json", typeof(ErrorResponse), Summary = "The artist search encountered an error.", Description = "The artist search encountered an error.")]
-        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "coles/music/artist/{artistName}")]
-            HttpRequest request, string artistName)
+        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "coles/music/artist")]
+            HttpRequest request)
         {
             var correlationId = request.GetHeaderValue("correlationId");
+            var artistName = request.GetQueryStringValue("name");
 
             var searchArtistRequest = new SearchArtistByNameRequestDto
             {

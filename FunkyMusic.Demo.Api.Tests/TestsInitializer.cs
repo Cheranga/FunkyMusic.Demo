@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using AutoFixture;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using Newtonsoft.Json;
@@ -36,12 +37,12 @@ namespace FunkyMusic.Demo.Api.Tests
             return mockedRequest.Object;
         }
 
-        public async Task<HttpRequest> GetMockedRequest(Dictionary<string, StringValues> headers = null)
+        public HttpRequest GetMockedRequest(Dictionary<string, StringValues> headers = null, Dictionary<string, StringValues> queries = null)
         {
             var mockedRequest = new Mock<HttpRequest>();
 
-            var httpHeaders = headers ?? new Dictionary<string, StringValues>();
-            mockedRequest.Setup(x => x.Headers).Returns(new HeaderDictionary(httpHeaders));
+            mockedRequest.Setup(x => x.Headers).Returns(headers == null? null: new HeaderDictionary(headers));
+            mockedRequest.Setup(x => x.Query).Returns(queries == null ? null : new QueryCollection(queries));
 
             return mockedRequest.Object;
         }

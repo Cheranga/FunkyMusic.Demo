@@ -18,17 +18,32 @@ using Xunit;
 namespace FunkyMusic.Demo.Api.Tests.ResponseFormatters
 {
     [Collection(MusicDemoApiTestsCollection.Name)]
-    public class GetArtistByNameResponseFormatterTests
+    public class SearchArtistByNameResponseDtoFormatterTests
     {
         private readonly TestsInitializer _testsInitializer;
-        private GetArtistByNameResponseFormatter _responseFormatter;
+        private SearchArtistByNameResponseDtoFormatter _responseFormatter;
         private Result<SearchArtistByNameResponseDto> _result;
         private IActionResult _response;
 
-        public GetArtistByNameResponseFormatterTests(TestsInitializer testsInitializer)
+        public SearchArtistByNameResponseDtoFormatterTests(TestsInitializer testsInitializer)
         {
             _testsInitializer = testsInitializer;
-            _responseFormatter = new GetArtistByNameResponseFormatter();
+            _responseFormatter = new SearchArtistByNameResponseDtoFormatter();
+        }
+
+        [Fact]
+        public void ResultIsNull()
+        {
+            this.Given(x => GivenResultIsNull())
+                .When(x => WhenResponseIsReturned())
+                .Then(x=> ThenMustReturnErrorResponse(HttpStatusCode.InternalServerError))
+                .Then(x => ThenMustContainValidationErrors())
+                .BDDfy();
+        }
+
+        private void GivenResultIsNull()
+        {
+            _result = null;
         }
 
         [Fact]

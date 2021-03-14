@@ -6,6 +6,7 @@ using FunkyMusic.Demo.Api.Dto.Requests;
 using FunkyMusic.Demo.Api.Dto.Responses;
 using FunkyMusic.Demo.Application.Requests;
 using FunkyMusic.Demo.Domain;
+using FunkyMusic.Demo.Domain.Constants;
 using MediatR;
 
 namespace FunkyMusic.Demo.Api.Handlers
@@ -33,10 +34,16 @@ namespace FunkyMusic.Demo.Api.Handlers
                 return Result<SearchRecordsForArtistByIdResponseDto>.Failure(operation.ErrorCode, operation.Validation);
             }
 
-            var recordDtos = operation.Data.Records.Select(x => new RecordDto
+            var records = operation.Data.Records;
+            if (records == null || !records.Any())
             {
+                return Result<SearchRecordsForArtistByIdResponseDto>.Failure(ErrorCodes.ArtistRecordsNotFound, "Records for the artist were not found.");
+            }
+
+            var recordDtos = records.Select(x => new RecordDto
+            {
+                Id = x.Id,
                 Title = x.Name,
-                ReleaseDate = x.ReleaseDate
             }).ToList();
 
             var response = new SearchRecordsForArtistByIdResponseDto

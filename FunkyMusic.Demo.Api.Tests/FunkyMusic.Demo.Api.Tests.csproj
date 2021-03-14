@@ -22,11 +22,4 @@
     <ProjectReference Include="..\FunkyMusic.Demo.Api\FunkyMusic.Demo.Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="local.settings.json">
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -21,22 +23,22 @@ using Xunit;
 namespace FunkyMusic.Demo.Api.Tests.Functions
 {
     [Collection(MusicDemoApiTestsCollection.Name)]
-    public class GetArtistByNameFunctionTests
+    public class GetRecordsForArtistByIdFunctionTests
     {
         private readonly TestsInitializer _testsInitializer;
-        private readonly GetArtistByNameFunction _function;
+        private readonly GetRecordsForArtistByIdFunction _function;
         private HttpRequest _httpRequest;
-        private readonly ILogger<GetArtistByNameFunction> _logger;
+        private readonly ILogger<GetRecordsForArtistByIdFunction> _logger;
         private readonly Mock<IMediator> _mediator;
         private IActionResult _response;
 
-        public GetArtistByNameFunctionTests(TestsInitializer testsInitializer)
+        public GetRecordsForArtistByIdFunctionTests(TestsInitializer testsInitializer)
         {
             _testsInitializer = testsInitializer;
             _mediator = new Mock<IMediator>();
-            _logger = Mock.Of<ILogger<GetArtistByNameFunction>>();
+            _logger = Mock.Of<ILogger<GetRecordsForArtistByIdFunction>>();
 
-            _function = new GetArtistByNameFunction(_mediator.Object, new SearchArtistByNameResponseDtoFormatter(), _logger);
+            _function = new GetRecordsForArtistByIdFunction(_mediator.Object, new SearchRecordsForArtistByIdResponseDtoFormatter());
         }
 
         [Theory]
@@ -45,7 +47,7 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
         public Task InvalidCorrelationIdInHeader(string correlationId)
         {
             this.Given(x => GivenInvalidCorrelationIdIsProvidedInRequest(correlationId))
-                .When(x => WhenSearchByArtistNameTriggers())
+                .When(x => WhenSearchForRecordsByArtistIdTriggers())
                 .Then(x => ThenMustReturnErrorResponse(HttpStatusCode.BadRequest))
                 .And(x => ThenMustContainErrorsInTheResponse())
                 .BDDfy();
@@ -56,8 +58,8 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
 
         private Task ThenMustContainErrorsInTheResponse()
         {
-            var badRequestResponse = (ObjectResult) _response;
-            var errorResponse = (ErrorResponse) badRequestResponse.Value;
+            var badRequestResponse = (ObjectResult)_response;
+            var errorResponse = (ErrorResponse)badRequestResponse.Value;
             errorResponse.Should().NotBeNull();
             errorResponse.Errors.Should().NotBeNullOrEmpty();
 
@@ -65,9 +67,9 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
         }
 
 
-        private async Task WhenSearchByArtistNameTriggers()
+        private async Task WhenSearchForRecordsByArtistIdTriggers()
         {
-            _response = await _function.SearchAsync(_httpRequest);
+            _response = await _function.SearchAsync(_httpRequest, "someartistid");
         }
 
         private Task GivenInvalidCorrelationIdIsProvidedInRequest(string correlationId)
@@ -77,17 +79,17 @@ namespace FunkyMusic.Demo.Api.Tests.Functions
                 {"correlationId", correlationId}
             });
 
-            _mediator.Setup(x => x.Send(It.IsAny<SearchArtistByNameRequestDto>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<SearchArtistByNameResponseDto>.Failure(ErrorCodes.ValidationError, "errormessage"));
+            _mediator.Setup(x => x.Send(It.IsAny<SearchRecordsForArtistByIdRequestDto>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result<SearchRecordsForArtistByIdResponseDto>.Failure(ErrorCodes.ValidationError, "errormessage"));
 
             return Task.CompletedTask;
         }
 
         private Task ThenMustReturnErrorResponse(HttpStatusCode expectedHttpStatusCode)
         {
-            var badRequestResponse = (ObjectResult) _response;
+            var badRequestResponse = (ObjectResult)_response;
             badRequestResponse.Should().NotBeNull();
-            badRequestResponse.StatusCode.Should().Be((int) expectedHttpStatusCode);
+            badRequestResponse.StatusCode.Should().Be((int)expectedHttpStatusCode);
             return Task.CompletedTask;
         }
     }
