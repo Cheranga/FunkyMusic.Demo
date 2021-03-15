@@ -12,6 +12,10 @@
         "rgName": {
             "type": "string",
             "defaultValue": "tbd"
+        }, 
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "tbd"
         },        
         "sharedStorageName": {
             "type": "string",
