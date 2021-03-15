@@ -6,9 +6,9 @@ variables:
   - name: keyVaultName
     value: cc-kv-funkymusicdemo-$(environmentName)
   - name: rgName
+    value: cc-rg-funkymusicdemo-$(environmentName)
   - name: rgLocation
     value: Australia Southeast
-    value: cc-rg-funkymusicdemo-$(environmentName)
   - name: sharedStorageName
     value: "ccsgarmtemplates$(environmentName)"
   - name: sharedContainerName
