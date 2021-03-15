@@ -38,7 +38,7 @@ namespace FunkyMusic.Demo.Api.BFF.Functions
         //[OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(SearchArtistByNameResponseDto), Summary = "All the artists which matches the search.", Description = "All the artists which matches the search.")]
         [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(ErrorResponse), Summary = "The artist search request is invalid.", Description = "The artist search request is invalid.")]
         [OpenApiResponseWithBody(HttpStatusCode.InternalServerError, "application/json", typeof(ErrorResponse), Summary = "The artist search encountered an error.", Description = "The artist search encountered an error.")]
-        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "coles/music/artist")]
+        public async Task<IActionResult> SearchAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "myapp/music/artist")]
             HttpRequest request)
         {
             var correlationId = request.GetHeaderValue("correlationId");
