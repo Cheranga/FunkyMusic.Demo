@@ -27,7 +27,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Tests.Handlers
         private Mock<IMusicArtistFilterService> _filterService;
         private SearchArtistByNameRequestHandler _handler;
         private SearchArtistByNameRequest _request;
-        private Result<List<Artist>> _operation;
+        private Result<SearchArtistByNameResponse> _operation;
 
         public SearchArtistByNameRequestHandlerTests(TestsInitializer testsInitializer)
         {
@@ -88,7 +88,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Tests.Handlers
         {
             _operation.Should().NotBeNull();
             _operation.Status.Should().BeTrue();
-            _operation.Data.Should().NotBeNullOrEmpty();
+            _operation.Data.Artists.Should().NotBeNullOrEmpty();
 
             return Task.CompletedTask;
         }
@@ -146,7 +146,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Tests.Handlers
         {
             _operation.Should().NotBeNull();
             _operation.Status.Should().BeTrue();
-            _operation.Data.Should().HaveCountGreaterOrEqualTo(1);
+            _operation.Data.Artists.Should().HaveCountGreaterOrEqualTo(1);
 
             return Task.CompletedTask;
         }

@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "98b4d677-a6cc-402c-8154-79066c8f3663",
+		"name": "ColesFunkyMusicDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search artist by name",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "correlationId",
+						"value": "666",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}/api/music/search/artist?name=eminem",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"music",
+						"search",
+						"artist"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "eminem"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get recordings for artist id",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "correlationId",
+						"value": "666",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}/api/music/search/records/artist/b95ce3ff-3d05-4e87-9e01-c97b66af13d4",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"music",
+						"search",
+						"records",
+						"artist",
+						"b95ce3ff-3d05-4e87-9e01-c97b66af13d4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BFF - Get artist data or associated recordings",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "correlationId",
+						"value": "666",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}/api/coles/music/artist?name=eminem",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"coles",
+						"music",
+						"artist"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "eminem"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API documentation (open API V2 json)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/openapi/v2.json",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"openapi",
+						"v2.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

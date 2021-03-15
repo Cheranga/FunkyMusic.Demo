@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FunkyMusic.Demo.Infrastructure.Api.Dto.Assets
 {
+    [ExcludeFromCodeCoverage]
     public class MusicArtistDto
     {
         public string Id { get; set; }

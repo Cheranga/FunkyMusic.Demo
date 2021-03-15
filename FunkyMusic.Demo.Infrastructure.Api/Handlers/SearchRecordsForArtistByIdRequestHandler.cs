@@ -12,7 +12,7 @@ using MediatR;
 
 namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
 {
-    internal class SearchRecordsForArtistByIdRequestHandler : IRequestHandler<SearchRecordsForArtistByIdRequest, Result<List<Record>>>
+    internal class SearchRecordsForArtistByIdRequestHandler : IRequestHandler<SearchRecordsForArtistByIdRequest, Result<SearchRecordsForArtistByIdResponse>>
     {
         private readonly IMusicSearchApiClient _musicSearchApiClient;
 
@@ -21,19 +21,19 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
             _musicSearchApiClient = musicSearchApiClient;
         }
 
-        public async Task<Result<List<Record>>> Handle(SearchRecordsForArtistByIdRequest request, CancellationToken cancellationToken)
+        public async Task<Result<SearchRecordsForArtistByIdResponse>> Handle(SearchRecordsForArtistByIdRequest request, CancellationToken cancellationToken)
         {
             var operation = await _musicSearchApiClient.GetRecordsForArtistByIdAsync(request.ArtistId);
 
             if (!operation.Status)
             {
-                return Result<List<Record>>.Failure(operation.ErrorCode, operation.Validation);
+                return Result<SearchRecordsForArtistByIdResponse>.Failure(operation.ErrorCode, operation.Validation);
             }
 
             var recordDtos = operation.Data?.Recordings ?? new List<MusicRecordDto>();
             if (!recordDtos.Any())
             {
-                return Result<List<Record>>.Failure(ErrorCodes.ArtistRecordsNotFound, "Records were not found for artist.");
+                return Result<SearchRecordsForArtistByIdResponse>.Failure(ErrorCodes.ArtistRecordsNotFound, "Records were not found for artist.");
             }
 
             var records = recordDtos.Select(x => new Record
@@ -43,7 +43,10 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
                 Title = x.Title
             }).ToList();
 
-            return Result<List<Record>>.Success(records);
+            return Result<SearchRecordsForArtistByIdResponse>.Success(new SearchRecordsForArtistByIdResponse
+            {
+                Records = records
+            });
         }
     }
 }

@@ -35,7 +35,7 @@ namespace FunkyMusic.Demo.Application.Handlers
                 return Result<GetRecordsForArtistByIdResponse>.Failure(operation.ErrorCode, operation.Validation);
             }
 
-            var records = operation.Data?.ToList() ?? new List<Record>();
+            var records = operation.Data?.Records?.ToList() ?? new List<Record>();
             if (!records.Any())
             {
                 return Result<GetRecordsForArtistByIdResponse>.Failure(ErrorCodes.ArtistRecordsNotFound, "No records found for the artist.");

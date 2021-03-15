@@ -32,14 +32,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.ApiClients
             try
             {
                 var uri = new Uri($"{_musicSearchConfig.Url}/artist?query={artistName}");
-                var httpRequest = new HttpRequestMessage(HttpMethod.Get, uri)
-                {
-                    Headers =
-                    {
-                        {"User-Agent", _musicSearchConfig.ApplicationId},
-                        {"Accept", AcceptHeaderValue}
-                    }
-                };
+                var httpRequest = GetHttpRequest(uri, HttpMethod.Get);
 
                 var httpResponse = await _httpClient.SendAsync(httpRequest);
                 if (!httpResponse.IsSuccessStatusCode)
@@ -72,14 +65,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.ApiClients
             try
             {
                 var uri = new Uri($"{_musicSearchConfig.Url}/artist/{artistId}?inc=recordings");
-                var httpRequest = new HttpRequestMessage(HttpMethod.Get, uri)
-                {
-                    Headers =
-                    {
-                        {"User-Agent", _musicSearchConfig.ApplicationId},
-                        {"Accept", AcceptHeaderValue}
-                    }
-                };
+                var httpRequest = GetHttpRequest(uri, HttpMethod.Get);
 
                 var httpResponse = await _httpClient.SendAsync(httpRequest);
                 if (!httpResponse.IsSuccessStatusCode)
@@ -104,6 +90,20 @@ namespace FunkyMusic.Demo.Infrastructure.Api.ApiClients
             }
 
             return Result<MusicArtistRecordSearchResponseDto>.Failure(ErrorCodes.MusicSearchError, ErrorWhenSearchingRecordingsForArtist);
+        }
+
+        private HttpRequestMessage GetHttpRequest(Uri uri, HttpMethod httpMethod)
+        {
+            var httpRequest = new HttpRequestMessage(httpMethod, uri)
+            {
+                Headers =
+                {
+                    {"User-Agent", _musicSearchConfig.ApplicationId},
+                    {"Accept", AcceptHeaderValue}
+                }
+            };
+
+            return httpRequest;
         }
     }
 }

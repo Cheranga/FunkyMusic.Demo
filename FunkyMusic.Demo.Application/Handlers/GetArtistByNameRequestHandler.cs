@@ -40,9 +40,9 @@ namespace FunkyMusic.Demo.Application.Handlers
             return response;
         }
 
-        private Result<GetArtistByNameResponse> GetArtistResponse(List<Artist> operationData)
+        private Result<GetArtistByNameResponse> GetArtistResponse(SearchArtistByNameResponse response)
         {
-            var artists = operationData?.ToList() ?? new List<Artist>();
+            var artists = response?.Artists?.ToList() ?? new List<Artist>();
 
             if (!artists.Any())
             {

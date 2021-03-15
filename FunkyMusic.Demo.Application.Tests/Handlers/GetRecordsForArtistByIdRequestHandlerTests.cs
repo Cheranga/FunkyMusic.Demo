@@ -38,7 +38,7 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenThirdPartyMusicServiceReturnsError()
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchRecordsForArtistByIdRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Domain.Models.Record>>.Failure("errorcode", "errormessage"));
+                .ReturnsAsync(Result<SearchRecordsForArtistByIdResponse>.Failure("errorcode", "errormessage"));
 
             return Task.CompletedTask;
         }
@@ -97,7 +97,10 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenThereAreRecordsForArtist(List<Record> records)
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchRecordsForArtistByIdRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Record>>.Success(records));
+                .ReturnsAsync(Result<SearchRecordsForArtistByIdResponse>.Success(new SearchRecordsForArtistByIdResponse
+                {
+                    Records = records
+                }));
 
             return Task.CompletedTask;
         }
@@ -111,7 +114,10 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenNoRecordsCanBeFoundForArtist(List<Record> records)
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchRecordsForArtistByIdRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Record>>.Success(records));
+                .ReturnsAsync(Result<SearchRecordsForArtistByIdResponse>.Success(new SearchRecordsForArtistByIdResponse
+                {
+                    Records = records
+                }));
 
             return Task.CompletedTask;
 

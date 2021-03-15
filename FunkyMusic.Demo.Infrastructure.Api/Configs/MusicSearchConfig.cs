@@ -1,5 +1,8 @@
-﻿namespace FunkyMusic.Demo.Infrastructure.Api.Configs
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace FunkyMusic.Demo.Infrastructure.Api.Configs
 {
+    [ExcludeFromCodeCoverage]
     public class MusicSearchConfig
     {
         public string Url { get; set; }

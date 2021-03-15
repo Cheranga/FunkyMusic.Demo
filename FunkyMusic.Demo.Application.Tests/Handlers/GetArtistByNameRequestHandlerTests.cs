@@ -50,7 +50,7 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenThirdPartyMusicServiceReturnsError()
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchArtistByNameRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Artist>>.Failure("errorcode", "errormessage"));
+                .ReturnsAsync(Result<SearchArtistByNameResponse>.Failure("errorcode", "errormessage"));
 
             return Task.CompletedTask;
         }
@@ -65,7 +65,10 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenNoArtistsCanBeFoundForSearch(List<Artist> artists)
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchArtistByNameRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Artist>>.Success(artists));
+                .ReturnsAsync(Result<SearchArtistByNameResponse>.Success(new SearchArtistByNameResponse
+                {
+                    Artists = artists
+                }));
 
             return Task.CompletedTask;
         }
@@ -147,7 +150,10 @@ namespace FunkyMusic.Demo.Application.Tests.Handlers
         private Task GivenThereAreArtistsMatchingSearch(List<Artist> artists)
         {
             _mediator.Setup(x => x.Send(It.IsAny<SearchArtistByNameRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<List<Artist>>.Success(artists));
+                .ReturnsAsync(Result<SearchArtistByNameResponse>.Success(new SearchArtistByNameResponse
+                {
+                    Artists = artists
+                }));
 
             return Task.CompletedTask;
         }

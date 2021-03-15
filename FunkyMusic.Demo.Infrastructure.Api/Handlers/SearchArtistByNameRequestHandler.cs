@@ -13,7 +13,7 @@ using MediatR;
 
 namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
 {
-    internal class SearchArtistByNameRequestHandler : IRequestHandler<SearchArtistByNameRequest, Result<List<Artist>>>
+    internal class SearchArtistByNameRequestHandler : IRequestHandler<SearchArtistByNameRequest, Result<SearchArtistByNameResponse>>
     {
         private readonly IMusicSearchApiClient _musicSearchApiClient;
         private readonly IMusicArtistFilterService _musicArtistFilter;
@@ -24,12 +24,12 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
             _musicArtistFilter = musicArtistFilter;
         }
 
-        public async Task<Result<List<Artist>>> Handle(SearchArtistByNameRequest request, CancellationToken cancellationToken)
+        public async Task<Result<SearchArtistByNameResponse>> Handle(SearchArtistByNameRequest request, CancellationToken cancellationToken)
         {
             var operation = await _musicSearchApiClient.SearchArtistsByNameAsync(request.Name);
             if (!operation.Status)
             {
-                return Result<List<Artist>>.Failure(operation.ErrorCode, operation.Validation);
+                return Result<SearchArtistByNameResponse>.Failure(operation.ErrorCode, operation.Validation);
             }
 
             operation = _musicArtistFilter.FilterByScore(operation);
@@ -37,7 +37,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
             var artistDtos = operation.Data?.Artists ?? new List<MusicArtistDto>();
             if (!artistDtos.Any())
             {
-                return Result<List<Artist>>.Failure(ErrorCodes.ArtistNotFound, "Artist not found.");
+                return Result<SearchArtistByNameResponse>.Failure(ErrorCodes.ArtistNotFound, "Artist not found.");
             }
 
             var artists = artistDtos.Select(x => new Artist
@@ -47,7 +47,10 @@ namespace FunkyMusic.Demo.Infrastructure.Api.Handlers
                 Description = x.Disambiguation
             }).ToList();
 
-            return Result<List<Artist>>.Success(artists);
+            return Result<SearchArtistByNameResponse>.Success(new SearchArtistByNameResponse
+            {
+                Artists = artists
+            });
         }
     }
 }
