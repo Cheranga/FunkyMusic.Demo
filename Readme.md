@@ -61,7 +61,7 @@ This was designed and implemented as a BFF function, because from the descriptio
 
 A sample cURL command to call the service locally,
 ```
-curl --location --request GET 'http://localhost:7071/api/coles/music/artist?name=eminem' \
+curl --location --request GET 'http://localhost:7071/api/myapp/music/artist?name=eminem' \
 --header 'correlationId: 666'
 ```
 

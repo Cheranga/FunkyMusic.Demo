@@ -92,20 +92,20 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseurl}}/api/coles/music/artist?name=eminem",
+					"raw": "{{baseurl}}/api/myapp/music/artist?name=madonna",
 					"host": [
 						"{{baseurl}}"
 					],
 					"path": [
 						"api",
-						"coles",
+						"myapp",
 						"music",
 						"artist"
 					],
 					"query": [
 						{
 							"key": "name",
-							"value": "eminem"
+							"value": "madonna"
 						}
 					]
 				}
