@@ -1,6 +1,6 @@
-## **Coles Music Demo**
+## **Funky Music Demo**
 :innocent:
->*Kindly note that the API calls which I have used to get the artist and associated recordings from MusicBrainz API might not be exactly right but they can be changed without impacting the other layers.</p>Also, I haven't implemented any circuit breaker or retry patterns for the API calls here either.</p>I have included a POSTMAN environment and a collection for your convenience to run the endpoints through POSTMAN. Please find them in the `e2e` folder.*
+>*This is an API developed using Azure functions (V3) to connect to MusicBrainz and to return artist and their associated recordings.*
 
 :innocent:
 
@@ -8,7 +8,7 @@
 
 The design I have used in here is the clean architecture design principles. Please see below for how the solution and its modules are organized.
 
-![alt text](https://github.com/coles-engineering/202103-Cheranga/blob/feature/Demo/Images/DependenciesGraph.png "Project Structure")
+![alt text](https://github.com/Cheranga/FunkyMusic.Demo/blob/feature/Demo/Images/DependenciesGraph.png "Project Structure")
 
 ### **API Layer (FunkyMusic.Demo.Api)**
 
@@ -227,9 +227,9 @@ A typed HTTP client implementation has been done to get artist and recordings da
 
 * Have used `Bddfy` package here to organize the test cases and also it'll generate a test result file automatically once the test cases are executed. Here's a part of the report for the `API` project.
 
-![alt text](https://github.com/coles-engineering/202103-Cheranga/blob/feature/Demo/Images/BddfyReport.png "BDD report for API project")
+![alt text](https://github.com/Cheranga/FunkyMusic.Demo/blob/feature/Demo/Images/BddfyReport.png "BDD report for API project")
 
 * The current test coverage of the solution is as below,
 
-![alt text](https://github.com/coles-engineering/202103-Cheranga/blob/feature/Demo/Images/CodeCoverage.png "Test coverage")
+![alt text](https://github.com/Cheranga/FunkyMusic.Demo/blob/feature/Demo/Images/CodeCoverage.png "Test coverage")
 
