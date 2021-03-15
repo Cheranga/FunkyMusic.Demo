@@ -1,0 +1,15 @@
+variables:  
+  - name: createNewRg
+    value: true
+  - name: funcAppName
+    value: cc-fn-funkymusicdemo-$(environmentName)
+  - name: keyVaultName
+    value: cc-kv-funkymusicdemo-$(environmentName)
+  - name: rgName
+    value: cc-rg-funkymusicdemo-$(environmentName)
+  - name: sharedStorageName
+    value: "ccsgarmtemplates$(environmentName)"
+  - name: sharedContainerName
+    value: "ccfunkymusicdemo$(environmentName)"
+  - name: sgName
+    value: "ccsgfunkymusicdemo$(environmentName)"      

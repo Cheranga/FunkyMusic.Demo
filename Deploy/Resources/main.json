@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {        
+        "templateSas": {
+            "type": "securestring"
+        },
+        "buildNumber": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },        
+        "sharedStorageName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sharedStorageContainer": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgLocation": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgType": {
+            "type": "string",
+            "defaultValue": "tbd"
+        }        
+    },
+    "variables": {
+        "templateUri": "[concat('https://',parameters('sharedStorageName'),'.blob.core.windows.net/',parameters('sharedStorageContainer'))]",
+        "storageAccountDeployment": "[concat('storage-', parameters('sgName'),'-',parameters('buildNumber'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/StorageAccount/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "rgName": {
+                        "value": "[parameters('rgName')]"
+                    },
+                    "sgLocation": {
+                        "value": "[parameters('sgLocation')]"
+                    },
+                    "sgName": {
+                        "value": "[parameters('sgName')]"
+                    },
+                    "sgType": {
+                        "value": "[parameters('sgType')]"
+                    }
+                }
+            }
+        }
+    ]
+}
