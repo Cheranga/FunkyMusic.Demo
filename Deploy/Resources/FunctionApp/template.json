@@ -67,7 +67,7 @@
                 "type": "systemAssigned"
             },
             "properties": {
-                "name": "[concat(parameters('functionAppName'),'/Staging')]",
+                "name": "[parameters('functionAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]",
                 "siteConfig": {
                     "appSettings": [
