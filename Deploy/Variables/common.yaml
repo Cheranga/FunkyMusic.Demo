@@ -19,3 +19,5 @@ variables:
     value: "ccsgfunkymusicdemo$(environmentName)"      
   - name: sgLocation
     value: Australia Southeast
+  - name: sgType
+    value: Standard_GRS
