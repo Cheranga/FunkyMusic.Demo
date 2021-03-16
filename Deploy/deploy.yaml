@@ -59,4 +59,11 @@ steps:
         -sgName "$(sgName)" 
         -sgType "$(sgType)" 
         -funcAppName "$(funcAppName)" 
+        -keyVaultName "$(keyVaultName)"         
+        -planName "$(planName)" 
+        -planSku "$(planSku)" 
+        -planTier "$(planTier)" 
+        -musicSearchApplicationId "$(musicSearchApplicationId)" 
+        -musicSearchConfigUrl "$(musicSearchConfigUrl)" 
+        -musicSearchConfigConfidence "$(musicSearchConfigConfidence)" 
       deploymentOutputs: ArmOutputs            

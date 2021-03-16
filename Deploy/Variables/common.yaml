@@ -21,3 +21,16 @@ variables:
     value: Australia Southeast
   - name: sgType
     value: Standard_GRS
+  - name: planName
+    value: "plan-cc-products-$(environmentName)"
+  - name: planSku
+    value: Y1        
+  - name: planTier
+    value: Dynamic  
+  - name: musicSearchApplicationId
+    value: "PostmanRuntime/7.26.10"
+  - name: musicSearchConfigUrl
+    value: "https://musicbrainz.org/ws/2"
+  - name: musicSearchConfigConfidence
+    value: 85      
+  
