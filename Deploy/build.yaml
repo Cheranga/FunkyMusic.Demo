@@ -1,7 +1,17 @@
 parameters:
   projectFiles: ''
+  nugetPackages: ''
 
 steps:
+
+- task: Cache@2
+  inputs:
+    key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/packages.lock.json'
+    restoreKeys: |
+       nuget | "$(Agent.OS)"
+       nuget
+    path: ${{parameters.nugetPackages}}
+  displayName: Cache NuGet packages
 
 - task: DotNetCoreCLI@2
   displayName: Build and Restore
