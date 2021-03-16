@@ -201,6 +201,9 @@
                     "planName": {
                         "value": "[parameters('planName')]"
                     },
+                    "storageAccountConnectionString": {
+                        "value": "[reference(variables('storageAccountDeployment')).outputs.storageAccountConnectionString.value]"
+                    },
                     "appInsightsKey": {
                         "value": "[reference(variables('appInsightsDeployment')).outputs.appInsightsKey.value]"
                     }
