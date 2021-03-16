@@ -17,3 +17,5 @@ variables:
     value: "ccfunkymusicdemo$(environmentName)"
   - name: sgName
     value: "ccsgfunkymusicdemo$(environmentName)"      
+  - name: sgLocation
+    value: Australia Southeast
