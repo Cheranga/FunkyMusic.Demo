@@ -207,10 +207,8 @@
                     }
                 },
                 "dependsOn": [
-                    // "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
-                    // "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]"
-                    "[resourceId('Microsoft.Web/sites', parameters('funcAppName'))]",
-                    "[resourceId('Microsoft.Web/sites/slots', parameters('funcAppName'),'Staging')]"
+                    "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
+                    "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]"
                     // "[variables('funcAppDeployment')]"
                 ]
             }
@@ -252,10 +250,8 @@
                     }
                 },
                 "dependsOn": [
-                    // "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
-                    // "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]",
-                    "[resourceId('Microsoft.Web/sites', parameters('funcAppName'))]",
-                    "[resourceId('Microsoft.Web/sites/slots', parameters('funcAppName'),'Staging')]",
+                    "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
+                    "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]",
                     "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
                     // "[variables('funcAppDeployment')]",
                     // "[variables('keyVaultDeployment')]"
