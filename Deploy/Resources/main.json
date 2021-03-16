@@ -217,9 +217,12 @@
                     }
                 },
                 "dependsOn": [
-                    "[variables('storageAccountDeployment')]",
-                    "[variables('aspDeployment')]",
-                    "[variables('appInsightsDeployment')]"
+                    "[resourceId('Microsoft.Resources/deployments', variables('storageAccountDeployment'))]",
+                    "[resourceId('Microsoft.Resources/deployments', variables('aspDeployment'))]",
+                    "[resourceId('Microsoft.Resources/deployments', variables('appInsightsDeployment'))]"
+                    // "[variables('storageAccountDeployment')]",
+                    // "[variables('aspDeployment')]",
+                    // "[variables('appInsightsDeployment')]"
                 ]
             }
         }
