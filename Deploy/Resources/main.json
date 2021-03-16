@@ -76,8 +76,7 @@
         "storageAccountDeployment": "[concat('storage-', parameters('sgName'),'-',parameters('buildNumber'))]",
         "appInsightsDeployment": "[concat('appinsights-', parameters('funcAppName'),parameters('buildNumber'))]",
         "keyVaultDeployment": "[concat('keyvault-', parameters('funcAppName'),parameters('buildNumber'))]",
-        "funcAppDeployment": "[concat('function-',parameters('funcAppName'),'-',parameters('buildNumber'))]",
-        "funcAppWithSettingsDeployment": "[concat('functionsettings-',parameters('funcAppName'),'-',parameters('buildNumber'))]"
+        "funcAppDeployment": "[concat('function-',parameters('funcAppName'),'-',parameters('buildNumber'))]"
     },
     "resources": [
         {
@@ -201,36 +200,6 @@
                     "planName": {
                         "value": "[parameters('planName')]"
                     },
-                    "appInsightsKey": {
-                        "value": "[reference(variables('appInsightsDeployment')).outputs.appInsightsKey.value]"
-                    }
-                },
-                "dependsOn": [
-                    "[variables('storageAccountDeployment')]",
-                    "[variables('appInsightsDeployment')]"
-                ]
-            }
-        },
-        {
-            "name": "[variables('funcAppWithSettingsDeployment')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('templateUri'),'/FunctionApp/template.json','?', parameters('templateSas'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "rgLocation": {
-                        "value": "[parameters('rgLocation')]"
-                    },
-                    "functionAppName": {
-                        "value": "[parameters('funcAppName')]"
-                    },
-                    "planName": {
-                        "value": "[parameters('planName')]"
-                    },
                     "keyVaultName": {
                         "value": "[parameters('keyVaultName')]"
                     },
@@ -248,8 +217,9 @@
                     }
                 },
                 "dependsOn": [
-                    "[variables('funcAppDeployment')]",
-                    "[variables('keyVaultDeployment')]"
+                    "[variables('storageAccountDeployment')]",
+                    "[variables('aspDeployment')]",
+                    "[variables('appInsightsDeployment')]"
                 ]
             }
         }
