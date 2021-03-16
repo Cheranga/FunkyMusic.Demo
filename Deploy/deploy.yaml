@@ -66,4 +66,44 @@ steps:
         -musicSearchApplicationId "$(musicSearchApplicationId)" 
         -musicSearchConfigUrl "$(musicSearchConfigUrl)" 
         -musicSearchConfigConfidence "$(musicSearchConfigConfidence)" 
-      deploymentOutputs: ArmOutputs            
+      deploymentOutputs: ArmOutputs   
+
+  - task: AzureFunctionApp@1
+    displayName: "Deploy Azure Function App to slot"
+    inputs:
+      azureSubscription: "$(azureResourceManagerConnection)"
+      appType: functionApp
+      appName: "$(funcAppName)"
+      package: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
+      deployToSlotOrASE: true
+      resourceGroupName: "$(rgName)"
+      slotName: "Staging"
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Start Staging Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      Action: 'Start Azure App Service'
+      WebAppName: '$(funcAppName)'
+      SpecifySlotOrASE: true
+      ResourceGroupName: "$(rgName)"
+      Slot: Staging  
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Swap Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      WebAppName: '$(funcAppName)'      
+      ResourceGroupName: '$(rgName)'
+      SourceSlot: Staging
+      SwapWithProduction: true
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      Action: 'Stop Azure App Service'
+      WebAppName: '$(funcAppName)'      
+      SpecifySlotOrASE: true
+      ResourceGroupName: '$(rgName)'
+      Slot: Staging                
