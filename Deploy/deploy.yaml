@@ -1,0 +1,109 @@
+parameters:
+  - name: buildNumber
+    type: string
+
+steps:
+  - task: AzureResourceManagerTemplateDeployment@3
+    condition: eq(variables['createNewRg'],true)
+    displayName: "Create resource group $(rgName)"
+    inputs:
+      deploymentScope: "Subscription"
+      azureResourceManagerConnection: "$(azureResourceManagerConnection)"
+      location: "$(rgLocation)"
+      deploymentMode: "Incremental"
+      csmFile: "$(Pipeline.Workspace)/deploy/ResourceGroup/template.json"
+      csmParametersFile: "$(Pipeline.Workspace)/deploy/ResourceGroup/template.parameters.json"
+      overrideParameters: |
+        -rgName "$(rgName)" 
+        -rgLocation "$(rgLocation)" 
+        -createNewRg $(createNewRg)        
+
+
+  - task: AzureCLI@2
+    displayName: "Upload ARM templates and generate SAS token"
+    inputs:
+      azureSubscription: "$(azureResourceManagerConnection)"
+      scriptType: "pscore"
+      scriptLocation: "inlineScript"
+      inlineScript: |
+        az storage account create -n "$(sharedStorageName)" -g "$(rgName)" -l "$(sharedStorageLocation)" 
+        az storage container create -n "$(sharedContainerName)" --account-name "$(sharedStorageName)" --auth-mode login 
+        $accountKey = (az storage account keys list -g "$(rgName)" -n "$(sharedStorageName)" | ConvertFrom-Json)[0].value
+        az storage blob upload-batch --source "$(Pipeline.Workspace)/deploy/" --pattern *.json --destination "$(sharedContainerName)" --account-name $(sharedStorageName) --account-key $accountKey
+
+        $expireTime = $(date -u -d '30 minutes' +%Y-%m-%dT%H:%MZ)
+        $connection = az storage account show-connection-string -g "$(rgName)" --name "$(sharedStorageName)" --query connectionString      
+        $token = az storage container generate-sas --name $(sharedContainerName) --expiry $expireTime --permissions r --output tsv --connection-string $connection
+
+        Write-Host "##vso[task.setvariable variable=storageSasToken]$token"
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Provision resources"
+    inputs:
+      azureResourceManagerConnection: "$(azureResourceManagerConnection)"
+      deploymentName: "main-$(funcAppName)-${{parameters.buildNumber}}-deployment"
+      deploymentScope: "Resource Group"
+      deploymentMode: "Incremental"      
+      location: "$(rgLocation)"
+      action: "Create Or Update Resource Group"
+      resourceGroupName: "$(rgName)"
+      csmFile: "$(Pipeline.Workspace)/deploy/main.json"
+      overrideParameters: |
+        -templateSas "$(storageSasToken)" 
+        -buildNumber "${{parameters.buildNumber}}" 
+        -rgName "$(rgName)" 
+        -rgLocation "$(rgLocation)" 
+        -sharedStorageName "$(sharedStorageName)" 
+        -sharedStorageContainer "$(sharedContainerName)" 
+        -sgLocation "$(sgLocation)" 
+        -sgName "$(sgName)" 
+        -sgType "$(sgType)" 
+        -funcAppName "$(funcAppName)" 
+        -keyVaultName "$(keyVaultName)"         
+        -planName "$(planName)" 
+        -planSku "$(planSku)" 
+        -planTier "$(planTier)" 
+        -musicSearchApplicationId "$(musicSearchApplicationId)" 
+        -musicSearchConfigUrl "$(musicSearchConfigUrl)" 
+        -musicSearchConfigConfidence "$(musicSearchConfigConfidence)" 
+      deploymentOutputs: ArmOutputs   
+
+  - task: AzureFunctionApp@1
+    displayName: "Deploy Azure Function App to slot"
+    inputs:
+      azureSubscription: "$(azureResourceManagerConnection)"
+      appType: functionApp
+      appName: "$(funcAppName)"
+      package: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
+      deployToSlotOrASE: true
+      resourceGroupName: "$(rgName)"
+      slotName: "Staging"
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Start Staging Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      Action: 'Start Azure App Service'
+      WebAppName: '$(funcAppName)'
+      SpecifySlotOrASE: true
+      ResourceGroupName: "$(rgName)"
+      Slot: Staging  
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Swap Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      WebAppName: '$(funcAppName)'      
+      ResourceGroupName: '$(rgName)'
+      SourceSlot: Staging
+      SwapWithProduction: true
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop Slot'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      Action: 'Stop Azure App Service'
+      WebAppName: '$(funcAppName)'      
+      SpecifySlotOrASE: true
+      ResourceGroupName: '$(rgName)'
+      Slot: Staging                

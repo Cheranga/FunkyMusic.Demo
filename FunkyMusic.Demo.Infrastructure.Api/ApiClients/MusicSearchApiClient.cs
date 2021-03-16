@@ -53,6 +53,9 @@ namespace FunkyMusic.Demo.Infrastructure.Api.ApiClients
             }
             catch (Exception exception)
             {
+                _logger.LogError("Error occured when calling music search API {exception}", exception);
+
+                _logger.LogError("The config data {url}, {applicationId}, {confidence}", _musicSearchConfig.Url, _musicSearchConfig.ApplicationId, _musicSearchConfig.MinConfidenceForArtistFilter);
                 _logger.LogError(exception, ErrorWhenSearchingForArtist);
             }
 

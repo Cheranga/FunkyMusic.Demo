@@ -1,0 +1,227 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "templateSas": {
+            "type": "securestring"
+        },
+        "buildNumber": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sharedStorageName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sharedStorageContainer": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgLocation": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "sgType": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "funcAppName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "planName": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "planSku": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "planTier": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "musicSearchApplicationId": {
+            "type": "securestring",
+            "defaultValue": "tbd"
+        },
+        "musicSearchConfigUrl": {
+            "type": "string",
+            "defaultValue": "tbd"
+        },
+        "musicSearchConfigConfidence": {
+            "type": "int",
+            "defaultValue": 85
+        }
+    },
+    "variables": {
+        "templateUri": "[concat('https://',parameters('sharedStorageName'),'.blob.core.windows.net/',parameters('sharedStorageContainer'))]",
+        "aspDeployment": "[concat('asp-', parameters('funcAppName'),parameters('buildNumber'))]",
+        "storageAccountDeployment": "[concat('storage-', parameters('sgName'),'-',parameters('buildNumber'))]",
+        "appInsightsDeployment": "[concat('appinsights-', parameters('funcAppName'),parameters('buildNumber'))]",
+        "keyVaultDeployment": "[concat('keyvault-', parameters('funcAppName'),parameters('buildNumber'))]",
+        "funcAppDeployment": "[concat('function-',parameters('funcAppName'),'-',parameters('buildNumber'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/StorageAccount/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "rgName": {
+                        "value": "[parameters('rgName')]"
+                    },
+                    "sgLocation": {
+                        "value": "[parameters('sgLocation')]"
+                    },
+                    "sgName": {
+                        "value": "[parameters('sgName')]"
+                    },
+                    "sgType": {
+                        "value": "[parameters('sgType')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('aspDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/AppServicePlan/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "planName": {
+                        "value": "[parameters('planName')]"
+                    },
+                    "planLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    },
+                    "planSku": {
+                        "value": "[parameters('planSku')]"
+                    },
+                    "planTier": {
+                        "value": "[parameters('planTier')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('appInsightsDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/AppInsights/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "name": {
+                        "value": "[parameters('funcAppName')]"
+                    },
+                    "rgLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('keyVaultDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/KeyVault/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "rgLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "functionAppName": {
+                        "value": "[parameters('funcAppName')]"
+                    },
+                    "musicSearchApplicationId": {
+                        "value": "[parameters('musicSearchApplicationId')]"
+                    }
+                },
+                "dependsOn": [
+                    "[variables('funcAppDeployment')]"
+                ]
+            }
+        },
+        {
+            "name": "[variables('funcAppDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/FunctionApp/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "rgLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    },
+                    "functionAppName": {
+                        "value": "[parameters('funcAppName')]"
+                    },
+                    "planName": {
+                        "value": "[parameters('planName')]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "storageAccountConnectionString": {
+                        "value": "[reference(variables('storageAccountDeployment')).outputs.storageAccountConnectionString.value]"
+                    },
+                    "appInsightsKey": {
+                        "value": "[reference(variables('appInsightsDeployment')).outputs.appInsightsKey.value]"
+                    },
+                    "musicSearchConfigUrl": {
+                        "value": "[parameters('musicSearchConfigUrl')]"
+                    },
+                    "musicSearchConfigConfidence": {
+                        "value": "[parameters('musicSearchConfigConfidence')]"
+                    }
+                },
+                "dependsOn": [
+                    "[variables('storageAccountDeployment')]",
+                    "[variables('aspDeployment')]",
+                    "[variables('appInsightsDeployment')]"
+                ]
+            }
+        }
+    ]
+}
