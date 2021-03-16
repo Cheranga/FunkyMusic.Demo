@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of Application Insights resource."
+            }
+        },
+        "rgLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location where the app insights will reside in."
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('name')]",
+            "type": "microsoft.insights/components",
+            "location": "[parameters('rgLocation')]",
+            "apiVersion": "2018-05-01-preview",
+            "properties": {
+                "ApplicationId": "[parameters('name')]",
+                "Application_Type": "web",
+                "Flow_Type": "Bluefield",
+                "Request_Source": "rest"
+            }
+        }
+    ],
+    "outputs": {
+        "appInsightsKey": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('name')), '2014-04-01').InstrumentationKey]"
+        }
+    }
+}

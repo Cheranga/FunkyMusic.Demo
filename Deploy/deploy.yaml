@@ -57,5 +57,6 @@ steps:
         -sharedStorageContainer "$(sharedContainerName)" 
         -sgLocation "$(sgLocation)" 
         -sgName "$(sgName)" 
-        -sgType "$(sgType)"                  
+        -sgType "$(sgType)" 
+        -funcAppName "$(funcAppName)" 
       deploymentOutputs: ArmOutputs            
