@@ -177,7 +177,8 @@
                     }                   
                 },
                 "dependsOn": [
-                    "[variables('storageAccountDeployment')]"
+                    "[resourceId('Microsoft.StorageAccount/storageAccounts', parameters('sgName'))]"
+                    // "[variables('storageAccountDeployment')]"
                 ]
             }
         },
@@ -206,7 +207,9 @@
                     }
                 },
                 "dependsOn": [
-                    "[variables('funcAppDeployment')]"
+                    "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
+                    "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]"
+                    // "[variables('funcAppDeployment')]"
                 ]
             }
         },        
@@ -247,8 +250,11 @@
                     }
                 },
                 "dependsOn": [
-                    "[variables('funcAppDeployment')]",
-                    "[variables('keyVaultDeployment')]"
+                    "[resourceId('Microsoft.Web.sites',parameters('funcAppName'))]",
+                    "[resourceId('Microsoft.Web.sites/slots',concat(parameters('funcAppName'),'/Staging'))]",
+                    "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+                    // "[variables('funcAppDeployment')]",
+                    // "[variables('keyVaultDeployment')]"
                 ]
             }
         }
