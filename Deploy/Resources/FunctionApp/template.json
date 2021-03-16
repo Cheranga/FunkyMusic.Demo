@@ -21,7 +21,14 @@
         "storageAccountConnectionString": {
             "type": "securestring",
             "defaultValue": "tbd"
+        },
+        "appInsightsKey": {
+            "type": "securestring",
+            "defaultValue": "tbd"
         }
+    },
+    "variables": {
+        "timeZone": "AUS Eastern Standard Time"
     },
     "resources": [
         {
@@ -33,25 +40,44 @@
             },
             "location": "[parameters('rgLocation')]",
             "kind": "functionapp",
-            "properties": {
-                "name": "[parameters('functionAppName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]",
-                "siteConfig": {
-                    "appSettings": [
-                        {
-                            "name": "FUNCTIONS_WORKER_RUNTIME",
-                            "value": "dotnet"
-                        },
-                        {
-                            "name": "FUNCTIONS_EXTENSION_VERSION",
-                            "value": "~3"
-                        },
-                        {
-                            "name": "AzureWebJobsStorage",
-                            "value": "[parameters('storageAccountConnectionString')]"
-                        }
-                    ]
+            "resources": [
+                {
+                    "name": "slotConfigNames",
+                    "type": "config",
+                    "apiVersion": "2018-11-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', parameters('functionAppName'))]"
+                    ],
+                    "tags": {
+                        "displayName": "slotConfigNames"
+                    },
+                    "properties": {
+                        "appSettingNames": [
+                            "CustomerApiKey"
+                        ]
+                    }
+                },
+                {
+                    "type": "config",
+                    "name": "appsettings",
+                    "apiVersion": "2018-11-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+                    ],
+                    "properties": {
+                        "AzureWebJobsStorage": "[parameters('storageAccountConnectionString')]",
+                        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[parameters('storageAccountConnectionString')]",
+                        "WEBSITE_CONTENTSHARE": "[toLower(parameters('functionAppName'))]",
+                        "FUNCTIONS_EXTENSION_VERSION": "~3",
+                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsKey')]",
+                        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+                        "WEBSITE_TIME_ZONE": "[variables('timeZone')]",
+                        "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG": 1
+                    }
                 }
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]"
             }
         },
         {
@@ -67,25 +93,28 @@
                 "type": "systemAssigned"
             },
             "properties": {
-                "name": "[parameters('functionAppName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]",
-                "siteConfig": {
-                    "appSettings": [
-                        {
-                            "name": "FUNCTIONS_WORKER_RUNTIME",
-                            "value": "dotnet"
-                        },
-                        {
-                            "name": "FUNCTIONS_EXTENSION_VERSION",
-                            "value": "~3"
-                        },
-                        {
-                            "name": "AzureWebJobsStorage",
-                            "value": "[parameters('storageAccountConnectionString')]"
-                        }
-                    ]
+                "serverFarmId": "[parameters('planName')]"
+            },
+            "resources": [
+                {
+                    "name": "appsettings",
+                    "type": "config",
+                    "apiVersion": "2016-08-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites/Slots', parameters('functionAppName'), 'Staging')]"
+                    ],
+                    "properties": {
+                        "AzureWebJobsStorage": "[parameters('storageAccountConnectionString')]",
+                        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[parameters('storageAccountConnectionString')]",
+                        "WEBSITE_CONTENTSHARE": "[toLower(parameters('functionAppName'))]",
+                        "FUNCTIONS_EXTENSION_VERSION": "~3",
+                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsKey')]",
+                        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+                        "WEBSITE_TIME_ZONE": "[variables('timeZone')]",
+                        "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG": 1
+                    }
                 }
-            }
+            ]
         }
     ]
 }
