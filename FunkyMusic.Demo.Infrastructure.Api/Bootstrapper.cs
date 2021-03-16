@@ -20,7 +20,7 @@ namespace FunkyMusic.Demo.Infrastructure.Api
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            services.Configure<MusicSearchConfig>(configuration.GetSection($"Values:{nameof(MusicSearchConfig)}"));
+            services.Configure<MusicSearchConfig>(configuration.GetSection(nameof(MusicSearchConfig)));
             services.AddScoped(provider =>
             {
                 var config = provider.GetRequiredService<IOptionsSnapshot<MusicSearchConfig>>().Value;
