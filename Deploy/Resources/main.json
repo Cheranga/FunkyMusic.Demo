@@ -176,7 +176,7 @@
                     }
                 },
                 "dependsOn": [
-                    "[variables('funcAppDeployment')]"
+                    "[resourceId('Microsoft.Resources/deployments', variables('funcAppDeployment'))]"
                 ]
             }
         },
