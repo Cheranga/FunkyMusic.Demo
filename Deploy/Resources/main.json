@@ -72,11 +72,11 @@
     },
     "variables": {
         "templateUri": "[concat('https://',parameters('sharedStorageName'),'.blob.core.windows.net/',parameters('sharedStorageContainer'))]",
-        "aspDeployment": "[concat('asp-', parameters('funcAppName'),parameters('buildNumber'))]",
-        "storageAccountDeployment": "[concat('storage-', parameters('sgName'),'-',parameters('buildNumber'))]",
-        "appInsightsDeployment": "[concat('appinsights-', parameters('funcAppName'),parameters('buildNumber'))]",
-        "keyVaultDeployment": "[concat('keyvault-', parameters('funcAppName'),parameters('buildNumber'))]",
-        "funcAppDeployment": "[concat('function-',parameters('funcAppName'),'-',parameters('buildNumber'))]"
+        "aspDeployment": "[concat(parameters('buildNumber'), '-asp-', parameters('funcAppName'))]",
+        "storageAccountDeployment": "[concat(parameters('buildNumber'), '-storage-', parameters('sgName'))]",
+        "appInsightsDeployment": "[concat(parameters('buildNumber'), '-appinsights-', parameters('funcAppName'))]",
+        "keyVaultDeployment": "[concat(parameters('buildNumber'), '-keyvault-', parameters('funcAppName'))]",
+        "funcAppDeployment": "[concat(parameters('buildNumber'), '-function-',parameters('funcAppName'))]"
     },
     "resources": [
         {
@@ -216,13 +216,10 @@
                         "value": "[parameters('musicSearchConfigConfidence')]"
                     }
                 },
-                "dependsOn": [
+                "dependsOn": [                    
                     "[resourceId('Microsoft.Resources/deployments', variables('storageAccountDeployment'))]",
                     "[resourceId('Microsoft.Resources/deployments', variables('aspDeployment'))]",
                     "[resourceId('Microsoft.Resources/deployments', variables('appInsightsDeployment'))]"
-                    // "[variables('storageAccountDeployment')]",
-                    // "[variables('aspDeployment')]",
-                    // "[variables('appInsightsDeployment')]"
                 ]
             }
         }

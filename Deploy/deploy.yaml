@@ -41,7 +41,7 @@ steps:
     displayName: "Provision resources"
     inputs:
       azureResourceManagerConnection: "$(azureResourceManagerConnection)"
-      deploymentName: "main-$(funcAppName)-${{parameters.buildNumber}}-deployment"
+      deploymentName: "${{parameters.buildNumber}}-main-$(funcAppName)"
       deploymentScope: "Resource Group"
       deploymentMode: "Incremental"      
       location: "$(rgLocation)"
