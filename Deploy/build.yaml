@@ -1,6 +1,8 @@
 parameters:
-  projectFiles: ''
-  nugetPackages: ''
+  projectFiles: ''  
+
+variables:
+ NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 
 steps:
 
@@ -10,7 +12,7 @@ steps:
     restoreKeys: |
        nuget | "$(Agent.OS)"
        nuget
-    path: ${{parameters.nugetPackages}}
+    path: $(NUGET_PACKAGES)
   displayName: Cache NuGet packages
 
 - task: DotNetCoreCLI@2

@@ -30,8 +30,7 @@ stages:
     steps:
     - template: 'build.yaml'
       parameters:        
-        projectFiles: '**/*.csproj'
-        nugetPackages: $(Pipeline.Workspace)/.nuget/packages
+        projectFiles: '**/*.csproj'        
 
 - stage: DEV
   dependsOn: ['Build']
