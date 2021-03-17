@@ -33,6 +33,4 @@ variables:
     value: "https://musicbrainz.org/ws/2"
   - name: musicSearchConfigConfidence
     value: 85      
-  - name: NUGET_PACKAGES
-    value: $(Pipeline.Workspace)/.nuget/packages    
   
