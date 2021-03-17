@@ -68,42 +68,55 @@ steps:
         -musicSearchConfigConfidence "$(musicSearchConfigConfidence)" 
       deploymentOutputs: ArmOutputs   
 
-  - task: AzureFunctionApp@1
-    displayName: "Deploy Azure Function App to slot"
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop Azure App Service (Staging)'
     inputs:
-      azureSubscription: "$(azureResourceManagerConnection)"
-      appType: functionApp
-      appName: "$(funcAppName)"
-      package: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
-      deployToSlotOrASE: true
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      action: 'Stop Azure App Service' 
+      WebAppName: "$(funcAppName)"
       resourceGroupName: "$(rgName)"
-      slotName: "Staging"
-
-  - task: AzureAppServiceManage@0
-    displayName: 'Start Staging Slot'
-    inputs:
-      azureSubscription: '$(azureResourceManagerConnection)'    
-      Action: 'Start Azure App Service'
-      WebAppName: '$(funcAppName)'
+      Slot: "Staging"
       SpecifySlotOrASE: true
-      ResourceGroupName: "$(rgName)"
-      Slot: Staging  
 
-  - task: AzureAppServiceManage@0
-    displayName: 'Swap Slot'
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Deploy Azure Function App (Staging)'
     inputs:
       azureSubscription: '$(azureResourceManagerConnection)'    
-      WebAppName: '$(funcAppName)'      
-      ResourceGroupName: '$(rgName)'
-      SourceSlot: Staging
-      SwapWithProduction: true
+      appType: functionApp
+      WebAppName: "$(funcAppName)"
+      package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+      enableCustomDeployment: true
+      DeploymentType: zipDeploy
+      JSONFiles: '**/host.json' 
+      resourceGroupName: "$(rgName)"
+      deployToSlotOrASE: true 
+      SlotName: "Staging"
 
   - task: AzureAppServiceManage@0
-    displayName: 'Stop Slot'
+    displayName: 'Start Azure App Service (Staging)'
     inputs:
       azureSubscription: '$(azureResourceManagerConnection)'    
-      Action: 'Stop Azure App Service'
-      WebAppName: '$(funcAppName)'      
-      SpecifySlotOrASE: true
-      ResourceGroupName: '$(rgName)'
-      Slot: Staging                
+      action: 'Start Azure App Service' 
+      WebAppName: "$(funcAppName)"
+      resourceGroupName: "$(rgName)"
+      Slot: "Staging"
+      SpecifySlotOrASE: true    
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Swap slots (Staging to Production)'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      action: 'Swap Slots' 
+      WebAppName: "$(funcAppName)"
+      resourceGroupName: "$(rgName)"
+      SourceSlot: 'staging'
+      
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop Azure App Service (Staging)'
+    inputs:
+      azureSubscription: '$(azureResourceManagerConnection)'    
+      action: 'Stop Azure App Service' 
+      WebAppName: "$(funcAppName)"
+      resourceGroupName: "$(rgName)"
+      Slot: "Staging"
+      SpecifySlotOrASE: true   
