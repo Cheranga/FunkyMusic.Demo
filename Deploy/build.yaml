@@ -1,9 +1,6 @@
 parameters:
   projectFiles: ''  
 
-variables:
- NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
-
 steps:
 
 - task: Cache@2
