@@ -3,42 +3,6 @@ parameters:
 
 steps:
 
-# - task: PowerShell@2
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       $cache = dotnet nuget locals global-packages -l
-#       $cacheLocation = $cache.Replace('info : global-packages: ', '')
-      
-#       Write-Host $cacheLocation
-
-#       echo $cacheLocation
-      
-#       Write-Host "##vso[task.setvariable variable=NUGET_PACKAGES;]$cacheLocation"
-
-#     pwsh: true
-- task: AzurePowerShell@4
-  displayName: "Set Nuget path"
-  inputs:
-    azureSubscription: "$(azureResourceManagerConnection)"
-    scriptType: 'inlineScript' # Optional. Options: filePath, inline
-    azurePowerShellVersion: 'latestVersion' # Required. Options: latestVersion, otherVersion
-    inline: |
-      $cache = dotnet nuget locals global-packages -l
-      $cacheLocation = $cache.Replace('info : global-packages: ', '')
-      echo "Cache location is..."
-      echo $cacheLocation                  
-      Write-Host "##vso[task.setvariable variable=NUGET_PACKAGES]$cacheLocation"
-
-- task: Cache@2
-  inputs:
-    key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/**/packages.lock.json'
-    restoreKeys: |
-       nuget | "$(Agent.OS)"
-       nuget
-    path: $(NUGET_PACKAGES)
-  displayName: Cache NuGet packages
-
 - task: DotNetCoreCLI@2
   displayName: Build and Restore
   inputs:
