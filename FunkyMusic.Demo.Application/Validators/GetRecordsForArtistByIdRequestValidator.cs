@@ -4,7 +4,7 @@ using FunkyMusic.Demo.Domain.Validators;
 
 namespace FunkyMusic.Demo.Application.Validators
 {
-    internal class GetRecordsForArtistByIdRequestValidator : ModelValidatorBase<GetRecordsForArtistByIdRequest>
+    public class GetRecordsForArtistByIdRequestValidator : ModelValidatorBase<GetRecordsForArtistByIdRequest>
     {
         public GetRecordsForArtistByIdRequestValidator()
         {

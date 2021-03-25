@@ -30,13 +30,13 @@ stages:
     steps:
     - template: 'build.yaml'
       parameters:        
-        projectFiles: '**/*.csproj'
+        projectFiles: '**/*.csproj'        
 
 - stage: DEV
   dependsOn: ['Build']
   jobs:
   - deployment: DEV
-    variables:
+    variables:    
     - template: 'Variables/common.yaml'
     - template: 'Variables/dev.yaml'
     pool:
